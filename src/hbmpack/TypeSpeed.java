@@ -2,15 +2,17 @@ package hbmpack;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class TypeSpeed {
+public class TypeSpeed extends JFrame implements ActionListener {
 
     JFrame frame = new JFrame();
     JLabel label = new JLabel("Typing Speed.");
     JLabel wpm = new JLabel("Words per minute:");
     JTextArea testWords = new JTextArea();
     JTextArea typeWords = new JTextArea();
+    JButton home_but;
 
     String test0 = "The landlady informed me that he had left the house shortly after eight o'clock in the morning. " +
             "I sat down beside the fire, however, with the intention of awaiting him, however long he might be. " +
@@ -32,6 +34,12 @@ public class TypeSpeed {
     String [] tests = {test0, test1, test2};
 
     TypeSpeed(){
+        home_but = new JButton();
+        frame.add(home_but);
+        home_but.setBounds(300,0,150,50);// sets location and size of button
+        home_but.setFocusable(false);
+        home_but.setText("Return to Menu");
+        home_but.addActionListener(this);
 
         label.setBounds(50,25,1000,50);
         label.setFont(new Font(null, Font.PLAIN, 25));
@@ -65,5 +73,11 @@ public class TypeSpeed {
 
         frame.add(testWords);
         frame.add(typeWords);
+    }
+
+    public void actionPerformed(ActionEvent e){
+        if (e.getSource() == home_but)
+            frame.dispose();
+            new HomePage();
     }
 }
