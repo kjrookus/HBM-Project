@@ -1,47 +1,55 @@
 package hbmpack;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Font;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
-public class TypeSpeed extends JFrame implements ActionListener {
+/**********************************************************
+ * Opens a GUI that displays one of three random typing tests.
+ * Allows the user to type in a corresponding box while measuring
+ * the speed they type in words per minute. Incorrect letters reduce
+ * the users WPM
+ *
+ * @author Kaden Rookus & Alex Bergers
+ * @version 02/10/2022
+ * **********************************************************/
+
+public class TypeSpeed {
 
     JFrame frame = new JFrame();
     JLabel label = new JLabel("Typing Speed.");
     JLabel wpm = new JLabel("Words per minute:");
     JTextArea testWords = new JTextArea();
     JTextArea typeWords = new JTextArea();
-    JButton home_but;
 
-    String test0 = "The landlady informed me that he had left the house shortly after eight o'clock in the morning. " +
-            "I sat down beside the fire, however, with the intention of awaiting him, however long he might be. " +
-            "I was already deeply interested in his inquiry, for, though it was surrounded by none of the grim and " +
-            "strange features which were associated with the two crimes which I have already recorded, still, the " +
-            "nature of the case and the exalted station of his client gave it a character of its own";
+    String test0 = "The landlady informed me that he had left the house shortly after eight"
+            + " o'clock in the morning. I sat down beside the fire, however, with the intention "
+            + "of awaiting him, however long he might be. I was already deeply interested in "
+            + "his inquiry, for, though it was surrounded by none of the grim and strange "
+            + "features which were associated with the two crimes which I have already recorded, "
+            + "still, the nature of the case and the exalted station of his client gave it a "
+            + "character of its own";
 
-    String test1 = "To learn to type quickly, practice often and adopt the proper technique. Fix your posture, " +
-            "have adequate lighting, position your hands correctly over the keyboard, look at the screen and " +
-            "use all your fingers to hit the keys. At first, concentrate on accuracy over speed. This will help " +
-            "you develop muscle memory and create automatic reflexes. Keep practicing and gradually pick up the pace. " +
-            "You'll see results after just a few weeks!";
+    String test1 = "To learn to type quickly, practice often and adopt the proper technique. "
+            + "Fix your posture, have adequate lighting, position your hands correctly over the "
+            + "keyboard, look at the screen and use all your fingers to hit the keys. At first, "
+            + "concentrate on accuracy over speed. This will help you develop muscle memory and "
+            + "create automatic reflexes. Keep practicing and gradually pick up the pace. "
+            + "You'll see results after just a few weeks!";
 
-    String test2 = "A late 20th century trend in typing, primarily used with devices with small keyboards " +
-            "(such as PDAs and Smartphones), is thumbing or thumb typing. This can be accomplished using one or both thumbs." +
-            " Similar to desktop keyboards and input devices, if a user overuses keys which need hard presses and/or" +
-            " have small and unergonomic layouts, it could cause thumb tendonitis or other repetitive strain injury.";
+    String test2 = "A late 20th century trend in typing, primarily used with devices with "
+            + "small keyboards (such as PDAs and Smartphones), is thumbing or thumb typing. "
+            + "This can be accomplished using one or both thumbs. Similar to desktop keyboards "
+            + "and input devices, if a user overuses keys which need hard presses and/or have "
+            + "small and unergonomic layouts, it could cause thumb tendinitis or other "
+            + "repetitive strain injury.";
 
-    String [] tests = {test0, test1, test2};
+    String[] tests = {test0, test1, test2};
 
-    TypeSpeed(){
-        home_but = new JButton();
-        frame.add(home_but);
-        home_but.setBounds(300,0,150,50);// sets location and size of button
-        home_but.setFocusable(false);
-        home_but.setText("Return to Menu");
-        home_but.addActionListener(this);
+    TypeSpeed() {
 
-        label.setBounds(50,25,1000,50);
+        label.setBounds(50, 25, 1000, 50);
         label.setFont(new Font(null, Font.PLAIN, 25));
 
         wpm.setBounds(50, 425, 200, 40);
@@ -53,7 +61,7 @@ public class TypeSpeed extends JFrame implements ActionListener {
         frame.setTitle("Typing Speed"); // Sets Title
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Exit Application
         frame.setLayout(null);
-        frame.setSize(600,600); //set dimension
+        frame.setSize(600, 600); //set dimension
         frame.setVisible(true); //make frame visible
 
         //adds in a random test in a uneditable text box that wraps words without breaking words up.
@@ -61,7 +69,7 @@ public class TypeSpeed extends JFrame implements ActionListener {
         testWords.setWrapStyleWord(true);
         testWords.setEditable(false);
         testWords.setFont(new Font(null, Font.PLAIN, 16));
-        testWords.setText(tests[(int)Math.floor(Math.random()*3)]);
+        testWords.setText(tests[(int) Math.floor(Math.random() * 3)]);
         testWords.setBounds(50, 75, 500, 150);
 
 
@@ -73,11 +81,5 @@ public class TypeSpeed extends JFrame implements ActionListener {
 
         frame.add(testWords);
         frame.add(typeWords);
-    }
-
-    public void actionPerformed(ActionEvent e){
-        if (e.getSource() == home_but)
-            frame.dispose();
-            new HomePage();
     }
 }
