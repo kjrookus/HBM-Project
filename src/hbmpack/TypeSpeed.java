@@ -1,6 +1,9 @@
 package hbmpack;
 
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.time.LocalTime;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -15,13 +18,22 @@ import javax.swing.JTextArea;
  * @version 02/10/2022
  * **********************************************************/
 
-public class TypeSpeed {
+public class TypeSpeed implements KeyListener {
+    //variable initilization for wpm calculating
+    double start = 0;
+    double end = 0;
+    double timeTaken;
+    int WPM = 0;
+    int totalChars =0;
 
     JFrame frame = new JFrame();
     JLabel label = new JLabel("Typing Speed.");
-    JLabel wpm = new JLabel("Words per minute:");
+    JLabel wpm = new JLabel("Words per minute: " + WPM);
     JTextArea testWords = new JTextArea();
     JTextArea typeWords = new JTextArea();
+
+
+
 
     String test0 = "The landlady informed me that he had left the house shortly after eight"
             + " o'clock in the morning. I sat down beside the fire, however, with the intention "
@@ -72,14 +84,49 @@ public class TypeSpeed {
         testWords.setText(tests[(int) Math.floor(Math.random() * 3)]);
         testWords.setBounds(50, 75, 500, 150);
 
-
         typeWords.setLineWrap(true);
         typeWords.setWrapStyleWord(true);
         typeWords.setFont(new Font(null, Font.PLAIN, 16));
         typeWords.setBounds(50, 230, 500, 150);
-
+        typeWords.setFocusable(true);
+        typeWords.addKeyListener(this);
 
         frame.add(testWords);
         frame.add(typeWords);
+
+
+    }
+
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        //gets the length of the current test
+        totalChars = testWords.getText().length();
+
+        if(typeWords.hasFocus() && typeWords.getText().length() ==0 ){
+            start = LocalTime.now().toNanoOfDay(); //stores the time when the player starts
+        }
+
+        if(typeWords.hasFocus() && typeWords.getText().length() == testWords.getText().length()){
+            typeWords.setEditable(false);
+            System.out.println("The total chars: " + totalChars + "The timetaken in seconds: " + timeTaken);
+            System.out.println(WPM);
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if(typeWords.hasFocus() && typeWords.getText().length() < testWords.getText().length()) {
+            int typedSoFar = typeWords.getText().length();
+            end = LocalTime.now().toNanoOfDay(); //stores the time when finished
+            timeTaken = ((end - start) / 1000000000.0); //calculates the time taken in seconds
+            WPM = (int) (((typedSoFar / 5) / timeTaken) * 60);
+            wpm.setText("Words per minute: " + WPM);
+        }
     }
 }
