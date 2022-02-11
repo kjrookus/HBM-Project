@@ -10,8 +10,10 @@ public class NumMemory extends JFrame implements ActionListener {
     JFrame NumMemory = new JFrame();
     JLabel label = new JLabel("Number Memory");
     JButton home_but;
+    HomePage.Profile numcurrent;
 
-    NumMemory(){
+    NumMemory(HomePage.Profile current){
+        numcurrent = current;
         home_but = new JButton();
         label.setBounds(0,0,1000,50);
         label.setFont(new Font(null, Font.PLAIN, 25));
@@ -34,7 +36,7 @@ public class NumMemory extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e){
         if (e.getSource()== home_but)
             NumMemory.dispose();
-            new HomePage();
+            new HomePage(numcurrent);
     }
 }
 

@@ -15,11 +15,12 @@ public class HomePage extends JFrame implements ActionListener {
     JButton verb_mem_but;
     JButton num_mem_but;
     JButton type_speed_but;
+    private Profile current;
 
-    // holds the current user's name
-    String UserName = "None";
 
-    HomePage(){
+    HomePage(Profile current_profile){
+        current = current_profile;
+        System.out.println("current name is: " + current.getName());
         // button for verb memory page
         verb_mem_but = new JButton();//creates button
         verb_mem_but.setBounds(5,100,150,50);// sets location and size of button
@@ -64,40 +65,83 @@ public class HomePage extends JFrame implements ActionListener {
     void NameField(JFrame Homepage){
         //creates two labels and a textfield
         JLabel LabelName = new JLabel("Please enter your name: ");
-        JLabel CurrentName = new JLabel("Current user: " + UserName);
+        JLabel CurrentName = new JLabel("Current user: " + current.getName());
+        JLabel TypeScore = new JLabel("WPM: " + current.getWpmScore());
         JTextField EnterName = new JTextField();
 
         CurrentName.setFont(new Font("Bold", Font.BOLD, 18));
         //sets the bounds of the labels and textfield
         LabelName.setBounds(150, 400, 150, 25);
         EnterName.setBounds(300, 400, 150, 25);
-        CurrentName.setBounds(150, 450, 300, 25);
+        CurrentName.setBounds(150, 440, 300, 25);
+        TypeScore.setBounds(25, 500, 150, 50);
 
         //implements an action listener to the textfield
         EnterName.addActionListener(e -> {
-            UserName = EnterName.getText();
-            CurrentName.setText("Current user: " + UserName);
+            current = new Profile(EnterName.getText());
+            CurrentName.setText("Current user: " + current.getName());
         });
         //adds labels and textfield to homepage
         Homepage.add(LabelName);
         Homepage.add(EnterName);
         Homepage.add(CurrentName);
+        Homepage.add(TypeScore);
     }
     // open windows when buttons are clocked
     public void actionPerformed(ActionEvent e){
         if (e.getSource()== verb_mem_but){
+            new VerbMemory(current); // Verb memory page
             HomePage.dispose();
-            new VerbMemory(); // Verb memory page
         }
         else if (e.getSource()== num_mem_but){
+            new NumMemory(current); // num memory page
             HomePage.dispose();
-            new NumMemory(); // num memory page
         }
         else if (e.getSource()== type_speed_but){
+            new TypeSpeed(current); // type Speed page
             HomePage.dispose();
-            new TypeSpeed(); // num memory page
+        }
+    }
+    static class Profile {
+        private String Name;
+        private int wpmScore = 0;
+        private int VerbScore = 0;
+        private int NumbScore = 0;
+        //profile constructor
+        public Profile(String Name){
+            this.Name = Name;
+        }
+        //getter and setter for profile name
+        public String getName() {
+            return Name;
         }
 
+        public void setName(String name) {
+            Name = name;
+        }
 
+        //getter and setter for WPM score
+        public int getWpmScore() {
+            return wpmScore;
+        }
+        public void setWpmScore(int wpmScore) {
+            this.wpmScore = wpmScore;
+        }
+        //getter and setter for Verbal memory Score
+        public int getVerbScore() {
+            return VerbScore;
+        }
+
+        public void setVerbScore(int verbScore) {
+            VerbScore = verbScore;
+        }
+        //getter and setter for Number memory score
+        public int getNumbScore() {
+            return NumbScore;
+        }
+
+        public void setNumbScore(int numbScore) {
+            NumbScore = numbScore;
+        }
     }
 }

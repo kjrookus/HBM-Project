@@ -5,7 +5,8 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String[] arg){
-        new HomePage();
+        HomePage.Profile current = new HomePage.Profile("None");
+        new HomePage(current);
 
     }
 

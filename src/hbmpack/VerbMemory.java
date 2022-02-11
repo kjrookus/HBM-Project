@@ -8,7 +8,9 @@ public class VerbMemory extends JFrame implements ActionListener {
     JFrame VerbMemory = new JFrame();
     JLabel label = new JLabel("Verbal Memory");
     JButton home_but;
-    VerbMemory(){
+    HomePage.Profile verbcurrent;
+    VerbMemory(HomePage.Profile current){
+        verbcurrent = current;
         home_but = new JButton();
         label.setBounds(0,0,1000,50);
         label.setFont(new Font(null, Font.PLAIN, 25));
@@ -31,7 +33,7 @@ public class VerbMemory extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e){
         if (e.getSource()== home_but)
             VerbMemory.dispose();
-            new HomePage();
+            new HomePage(verbcurrent);
     }
 }
 
