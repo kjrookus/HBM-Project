@@ -29,6 +29,7 @@ public class TypeSpeed implements KeyListener, ActionListener {
     JFrame frame = new JFrame();
     JLabel label = new JLabel("Typing Speed.");
     JLabel wpm = new JLabel("Words per minute: " + WPM);
+    JLabel adjustedWpm = new JLabel("Adjusted words per minute: " + WPM);
     JTextArea testWords = new JTextArea();
     JTextArea typeWords = new JTextArea();
     JButton home_but = new JButton();
@@ -66,12 +67,14 @@ public class TypeSpeed implements KeyListener, ActionListener {
 
         label.setBounds(50, 25, 1000, 50);
         label.setFont(new Font(null, Font.PLAIN, 25));
-
         wpm.setBounds(50, 425, 200, 40);
         wpm.setFont(new Font(null, Font.PLAIN, 16));
+        adjustedWpm.setBounds(50, 465, 400, 40);
+        adjustedWpm.setFont(new Font(null, Font.PLAIN, 16));
 
         frame.add(label);
         frame.add(wpm);
+        frame.add(adjustedWpm);
 
         frame.setTitle("Typing Speed"); // Sets Title
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Exit Application
@@ -107,6 +110,21 @@ public class TypeSpeed implements KeyListener, ActionListener {
 
     }
 
+    public double adjust(String input, String Goal){
+        int errors = 0;
+        double adjustment = 0.0;
+        for(int i =0; i<input.length(); i++){
+            if(input.charAt(i) != Goal.charAt(i)){
+                errors++;
+            }
+        }
+        if(input.length() != 0) {
+            adjustment = (float)(input.length() - errors) / (float)input.length();
+            System.out.println(adjustment);
+        }
+        return adjustment;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
         //gets the length of the current test
@@ -137,6 +155,7 @@ public class TypeSpeed implements KeyListener, ActionListener {
             timeTaken = ((end - start) / 1000000000.0); //calculates the time taken in seconds
             WPM = (int) (((typedSoFar / 5) / timeTaken) * 60);
             wpm.setText("Words per minute: " + WPM);
+            adjustedWpm.setText("Adjusted words per minute: " + ((int)(WPM * adjust(typeWords.getText(), testWords.getText()))));
         }
     }
 
