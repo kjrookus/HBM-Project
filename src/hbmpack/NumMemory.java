@@ -4,36 +4,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
+import java.lang.Math;
 
 public class NumMemory extends JFrame implements ActionListener {
 
     JFrame NumMemory = new JFrame();
     JLabel label = new JLabel("Number Memory");
     JLabel numberTest = new JLabel();
-    Random randomizer = new Random();
-    int first_number = randomizer.nextInt(10) + 1;
     JButton home_but;
     JButton start_game;
     JPanel game_panel;
     JTextField numbers;
-    boolean game_end = true;
-    int score = 0;
-    int level = 0;
+    Timer delay;
+    boolean game_end = false;
+    int level = 1;
+    int shown_number = 0;
 
     HomePage.Profile numcurrent;
 
-    NumMemory(HomePage.Profile current) throws InterruptedException {
+    NumMemory(HomePage.Profile current){
         numcurrent = current;
         label.setBounds(0, 0, 1000, 50);
         label.setFont(new Font(null, Font.PLAIN, 25));
 
         NumMemory.add(label);
-
-        numberTest.setText("" + first_number);
-        numberTest.setBounds(50, 50, 50, 50);
-        numberTest.setVisible(true);
-
 
         NumMemory.setTitle("Number Memory"); // Sets Title
         NumMemory.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Exit Application
@@ -43,9 +37,13 @@ public class NumMemory extends JFrame implements ActionListener {
         // game takes place in panel
         game_panel = new JPanel();
         game_panel.setBackground(Color.gray);
-        game_panel.setBounds(200, 200, 300, 300);
+        game_panel.setBounds(150, 150, 300, 300);
         NumMemory.add(game_panel);
         game_panel.setVisible(false);
+
+        numberTest.setText("Memorize: ");
+        numberTest.setBounds(50, 100, 100, 50);
+        numberTest.setVisible(true);
         game_panel.add(numberTest);
 
         // start button begins game
@@ -54,11 +52,12 @@ public class NumMemory extends JFrame implements ActionListener {
         start_game.addActionListener(this);
         start_game.setVisible(true);
         NumMemory.add(start_game);
-        // textArea for entering answer
+        // textField for entering answer
         numbers = new JTextField();
         numbers.setPreferredSize(new Dimension(100, 40));
         numbers.setVisible(false);
         numbers.setFont(new Font(null, Font.PLAIN, 16));
+        numbers.addActionListener(this);
         numbers.setFocusable(true);
         game_panel.add(numbers);
         // add home button
@@ -76,33 +75,55 @@ public class NumMemory extends JFrame implements ActionListener {
             NumMemory.dispose();
             new HomePage(numcurrent);
         }
-        else if (e.getSource() == start_game) {
-            theGame();
+        if (e.getSource() == start_game) {
+            start_game.setVisible(false);
+            theGame(level);
         }
-    }
-
-    // actual game
-    public void theGame() {
-        start_game.setVisible(false);
-        game_end = false; // loop until game is over
-        while (!game_end) {
-            try {
-                Thread.sleep(5000); // gives 5 seconds to memorize number
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-            numbers.setVisible(true);
-            numberTest.setVisible(false);
+        /*
+        * this is the action listener for the Jtextfield where the
+        * user inputs their answers. When someone presses enter
+        * while the textfield is in focus, it will evaluate their answer
+         */
+        if (e.getSource() == numbers){
             int answer = Integer.parseInt(numbers.getText());
-            if (answer == first_number) {
-                score += 1;
-                level += 1;
+            if (answer == shown_number) {
+                level++;
+                theGame(level);
             }
             else {
                 game_end = true;
             }
-
         }
+        //occurs after the 5 second delay
+        if(e.getSource() == delay){
+            numberTest.setVisible(false);
+            numbers.setVisible(true);
+        }
+    }
+
+    // actual game
+    public void theGame(int level) {
+        //shows the gamepanel and numbers, hides the input field
+        game_panel.setVisible(true);
+        numberTest.setVisible(true);
+        numbers.setVisible(false);
+        //sets the textfield back to blank
+        numbers.setText("");
+        //generates a random number of size relative to level
+        shown_number = getRandomNumber((int)Math.pow(10, level-1), (int)Math.pow(10, level));
+        //sets the text to the random number
+        numberTest.setText(String.valueOf(shown_number));
+
+        //pauses the program for 5 seconds, before calling the action listener with delay as the source
+        delay = new Timer(5000, this);
+        delay.setRepeats(false);
+        delay.start();
+
+    }
+
+    //random number generator between min and max
+    public int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
     }
 
 }
