@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import java.util.Random;
 
 public class NumMemory extends JFrame implements ActionListener {
@@ -17,7 +16,7 @@ public class NumMemory extends JFrame implements ActionListener {
     JButton home_but;
     JButton start_game;
     JPanel game_panel;
-    JTextArea numbers;
+    JTextField numbers;
     boolean game_end = true;
     int score = 0;
     int level = 0;
@@ -56,13 +55,10 @@ public class NumMemory extends JFrame implements ActionListener {
         start_game.setVisible(true);
         NumMemory.add(start_game);
         // textArea for entering answer
-        numbers = new JTextArea();
+        numbers = new JTextField();
         numbers.setPreferredSize(new Dimension(100, 40));
         numbers.setVisible(false);
-        numbers.setLineWrap(true);
-        numbers.setWrapStyleWord(true);
         numbers.setFont(new Font(null, Font.PLAIN, 16));
-        numbers.addKeyListener((KeyListener) this);
         numbers.setFocusable(true);
         game_panel.add(numbers);
         // add home button
@@ -81,7 +77,6 @@ public class NumMemory extends JFrame implements ActionListener {
             new HomePage(numcurrent);
         }
         else if (e.getSource() == start_game) {
-            game_panel.setVisible(true);
             theGame();
         }
     }
@@ -90,15 +85,12 @@ public class NumMemory extends JFrame implements ActionListener {
     public void theGame() {
         start_game.setVisible(false);
         game_end = false; // loop until game is over
-        while(!game_end){
-           /* try
-            {
+        while (!game_end) {
+            try {
                 Thread.sleep(5000); // gives 5 seconds to memorize number
-            }
-            catch (InterruptedException ex)
-            {
+            } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
-            }*/
+            }
             numbers.setVisible(true);
             numberTest.setVisible(false);
             int answer = Integer.parseInt(numbers.getText());
@@ -109,9 +101,8 @@ public class NumMemory extends JFrame implements ActionListener {
             else {
                 game_end = true;
             }
+
         }
-
     }
-
 
 }
