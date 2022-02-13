@@ -12,7 +12,7 @@ public class NumMemory extends JFrame implements ActionListener {
     JButton home_but;
     JButton start_game;
     JPanel game_panel;
-    JTextField numbers;
+    JTextArea numbers;
     boolean game_end = true;
     int score = 0;
     int level = 0;
@@ -33,22 +33,26 @@ public class NumMemory extends JFrame implements ActionListener {
         NumMemory.setSize(600,600); //set dimension
         NumMemory.setVisible(true); //make frame visible
 
+        // game takes place in panel
         game_panel = new JPanel();
         game_panel.setBackground(Color.gray);
         game_panel.setBounds(200,200,300,300);
         NumMemory.add(game_panel);
         game_panel.setVisible(false);
 
+        // start button begins game
         start_game = new JButton("start");
         start_game.setBounds(200,200,100,50);
         start_game.addActionListener(this);
         start_game.setVisible(true);
         NumMemory.add(start_game);
 
-        numbers = new JTextField();
+        // textArea for entering answer
+        numbers = new JTextArea();
         numbers.setPreferredSize(new Dimension(100,40));
         numbers.setVisible(false);
         game_panel.add(numbers);
+
         // add home button
         home_but = new JButton();
         NumMemory.add(home_but);
@@ -65,7 +69,6 @@ public class NumMemory extends JFrame implements ActionListener {
         else if (e.getSource() == start_game) {
             start_game.setVisible(false);
             game_panel.setVisible(true);
-            game_end = false;
         }
     }
 }
