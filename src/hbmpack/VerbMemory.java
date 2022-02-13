@@ -11,7 +11,7 @@ public class VerbMemory extends JFrame implements ActionListener {
     HomePage.Profile verbcurrent;
     VerbMemory(HomePage.Profile current){
         verbcurrent = current;
-        home_but = new JButton();
+
         label.setBounds(0,0,1000,50);
         label.setFont(new Font(null, Font.PLAIN, 25));
 
@@ -23,6 +23,7 @@ public class VerbMemory extends JFrame implements ActionListener {
         VerbMemory.setSize(600,600); //set dimension
         VerbMemory.setVisible(true); //make frame visible
 
+        home_but = new JButton();
         VerbMemory.add(home_but);
         home_but.setBounds(300,0,150,50);// sets location and size of button
         home_but.setFocusable(false);
