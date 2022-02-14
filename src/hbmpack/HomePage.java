@@ -94,11 +94,7 @@ public class HomePage extends JFrame implements ActionListener {
             HomePage.dispose();
         }
         else if (e.getSource()== num_mem_but){
-            try {
-                new NumMemory(current); // num memory page
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
+            new NumMemory(current); // num memory page
             HomePage.dispose();
         }
         else if (e.getSource()== type_speed_but){
