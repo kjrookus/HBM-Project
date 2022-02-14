@@ -103,6 +103,7 @@ public class NumMemory extends JFrame implements ActionListener {
                 score_tracker.setText("Score: " + score);
             }
             else {
+                numbers.setVisible(false);
                 game_end = true;
             }
         }

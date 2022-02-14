@@ -1,12 +1,15 @@
 package hbmpack;
 
-import java.awt.*;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.time.LocalTime;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
 /**********************************************************
  * Opens a GUI that displays one of three random typing tests.
@@ -23,13 +26,13 @@ public class TypeSpeed implements KeyListener, ActionListener {
     double start = 0;
     double end = 0;
     double timeTaken;
-    int WPM = 0;
-    int totalChars =0;
+    int Wpm = 0;
+    int totalChars = 0;
 
     JFrame frame = new JFrame();
     JLabel label = new JLabel("Typing Speed.");
-    JLabel wpm = new JLabel("Words per minute: " + WPM);
-    JLabel adjustedWpm = new JLabel("Adjusted words per minute: " + WPM);
+    JLabel wpm = new JLabel("Words per minute: " + Wpm);
+    JLabel adjustedWpm = new JLabel("Adjusted words per minute: " + Wpm);
     JTextArea testWords = new JTextArea();
     JTextArea typeWords = new JTextArea();
     JButton home_but = new JButton();
@@ -106,11 +109,12 @@ public class TypeSpeed implements KeyListener, ActionListener {
         home_but.setFocusable(false);
         home_but.setText("Return to Menu");
         home_but.addActionListener(this);
+        home_but.setVisible(false);
 
 
     }
 
-    public double adjust(String input, String Goal){
+    public double adjust(String input, String Goal) {
         int errors = 0;
         double adjustment = 0.0;
         for(int i =0; i<input.length(); i++){
@@ -137,8 +141,9 @@ public class TypeSpeed implements KeyListener, ActionListener {
         if(typeWords.hasFocus() && typeWords.getText().length() == testWords.getText().length()){
             typeWords.setEditable(false);
             System.out.println("The total chars: " + totalChars + "The timetaken in seconds: " + timeTaken);
-            System.out.println(WPM);
-            typecurrent.setWpmScore(WPM);
+            System.out.println(Wpm);
+            typecurrent.setWpmScore(Wpm);
+            home_but.setVisible(true);
         }
     }
 
@@ -153,9 +158,9 @@ public class TypeSpeed implements KeyListener, ActionListener {
             int typedSoFar = typeWords.getText().length();
             end = LocalTime.now().toNanoOfDay(); //stores the time when finished
             timeTaken = ((end - start) / 1000000000.0); //calculates the time taken in seconds
-            WPM = (int) (((typedSoFar / 5) / timeTaken) * 60);
-            wpm.setText("Words per minute: " + WPM);
-            adjustedWpm.setText("Adjusted words per minute: " + ((int)(WPM * adjust(typeWords.getText(), testWords.getText()))));
+            Wpm = (int) (((typedSoFar / 5) / timeTaken) * 60);
+            wpm.setText("Words per minute: " + Wpm);
+            adjustedWpm.setText("Adjusted words per minute: " + ((int)(Wpm * adjust(typeWords.getText(), testWords.getText()))));
         }
     }
 
