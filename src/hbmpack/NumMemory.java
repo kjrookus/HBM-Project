@@ -10,7 +10,7 @@ public class NumMemory extends JFrame implements ActionListener {
 
     JFrame NumMemory = new JFrame();
     JLabel label = new JLabel("Number Memory");
-    JLabel numberTest = new JLabel();
+    JLabel numberTest = new JLabel("Memorize", SwingConstants.CENTER);
     JButton home_but;
     JButton start_game;
     JPanel game_panel;
@@ -43,28 +43,29 @@ public class NumMemory extends JFrame implements ActionListener {
         game_panel.setBounds(150, 150, 300, 250);
         NumMemory.add(game_panel, BorderLayout.CENTER);
         game_panel.setVisible(false);
-        game_panel.setLayout(new FlowLayout(FlowLayout.LEFT, 40,30));
+        game_panel.setLayout(null);
 
-        score_tracker = new JLabel("Score: " + score);
+        score_tracker = new JLabel("Score: " + score,SwingConstants.CENTER);
         game_panel.add(score_tracker);
-        score_tracker.setVerticalAlignment(JLabel.BOTTOM);
-        score_tracker.setHorizontalAlignment(JLabel.LEFT);
+        score_tracker.setBounds(100 + game_panel.getInsets().bottom, 175 + game_panel.getInsets().right, 100,50);
 
         numberTest.setText("Memorize: ");
-        numberTest.setBounds(50, 100, 100, 50);
+        numberTest.setBounds(50 + game_panel.getInsets().bottom, 80 + game_panel.getInsets().right, 200, 50);
         numberTest.setVisible(true);
+        numberTest.setFont((new Font("Serif", Font.PLAIN, 40)));
         game_panel.add(numberTest);
 
         // start button begins game
         start_game = new JButton("start");
-        start_game.setBounds(220, 200, 150, 50);
+        start_game.setBounds(220, 250, 150, 50);
         start_game.addActionListener(this);
         start_game.setVisible(true);
         NumMemory.add(start_game);
+
         // textField for entering answer
         numbers = new JTextField();
         numbers.setPreferredSize(new Dimension(100, 40));
-        numbers.setHorizontalAlignment(JTextField.LEFT);
+        numbers.setBounds(100 + game_panel.getInsets().left, 150 + getInsets().right, 100, 40);
         numbers.setVisible(false);
         numbers.setFont(new Font(null, Font.PLAIN, 16));
         numbers.addActionListener(this);
@@ -105,6 +106,10 @@ public class NumMemory extends JFrame implements ActionListener {
                 theGame(level);
                 score ++;
                 score_tracker.setText("Score: " + score);
+                if (score >= numcurrent.getNumbScore()){
+                    numcurrent.setNumbScore(score);
+                }
+
             }
             else {
                 numbers.setVisible(false);
@@ -114,6 +119,7 @@ public class NumMemory extends JFrame implements ActionListener {
                     numcurrent.setNumbScore(score);
                 }
                 game_panel.add(start_game);
+                start_game.setBounds(100 + game_panel.getInsets().left, 150 + getInsets().right, 100, 40);
                 start_game.setText("Play Again");
                 start_game.setVisible(true);
                 score = 0;
