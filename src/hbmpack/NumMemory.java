@@ -40,10 +40,10 @@ public class NumMemory extends JFrame implements ActionListener {
         // game takes place in panel
         game_panel = new JPanel();
         game_panel.setBackground(Color.gray);
-        game_panel.setBounds(150, 150, 300, 100);
-        NumMemory.add(game_panel);
+        game_panel.setBounds(150, 150, 300, 250);
+        NumMemory.add(game_panel, BorderLayout.CENTER);
         game_panel.setVisible(false);
-        game_panel.setLayout(new GridLayout());
+        game_panel.setLayout(new FlowLayout(FlowLayout.LEFT, 40,30));
 
         score_tracker = new JLabel("Score: " + score);
         game_panel.add(score_tracker);
@@ -69,6 +69,7 @@ public class NumMemory extends JFrame implements ActionListener {
         numbers.setFont(new Font(null, Font.PLAIN, 16));
         numbers.addActionListener(this);
         numbers.setFocusable(true);
+        numbers.setToolTipText("Enter the number: ");
         game_panel.add(numbers);
         // add home button
         home_but = new JButton();
@@ -88,6 +89,9 @@ public class NumMemory extends JFrame implements ActionListener {
         if (e.getSource() == start_game) {
             start_game.setVisible(false);
             theGame(level);
+            score = 0;
+            level = 1;
+            score_tracker.setText("Score: " + score);
         }
         /*
         * this is the action listener for the Jtextfield where the
@@ -99,12 +103,21 @@ public class NumMemory extends JFrame implements ActionListener {
             if (answer == shown_number) {
                 level++;
                 theGame(level);
-                score += 1;
+                score ++;
                 score_tracker.setText("Score: " + score);
             }
             else {
                 numbers.setVisible(false);
+                score_tracker.setText("Final Score: " + score);
                 game_end = true;
+                if (score >= numcurrent.getNumbScore()){
+                    numcurrent.setNumbScore(score);
+                }
+                game_panel.add(start_game);
+                start_game.setText("Play Again");
+                start_game.setVisible(true);
+                score = 0;
+                level = 1;
             }
         }
         //occurs after the 5 second delay

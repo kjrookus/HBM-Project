@@ -67,6 +67,7 @@ public class HomePage extends JFrame implements ActionListener {
         JLabel LabelName = new JLabel("Please enter your name: ");
         JLabel CurrentName = new JLabel("Current user: " + current.getName());
         JLabel TypeScore = new JLabel("WPM: " + current.getWpmScore());
+        JLabel NumScore = new JLabel("Number Memory Score: " + current.getNumbScore());
         JTextField EnterName = new JTextField();
 
         CurrentName.setFont(new Font("Bold", Font.BOLD, 18));
@@ -75,6 +76,7 @@ public class HomePage extends JFrame implements ActionListener {
         EnterName.setBounds(300, 400, 150, 25);
         CurrentName.setBounds(150, 440, 300, 25);
         TypeScore.setBounds(25, 500, 150, 50);
+        NumScore.setBounds(25, 480,200,50 );
 
         //implements an action listener to the textfield
         EnterName.addActionListener(e -> {
@@ -86,6 +88,7 @@ public class HomePage extends JFrame implements ActionListener {
         Homepage.add(EnterName);
         Homepage.add(CurrentName);
         Homepage.add(TypeScore);
+        HomePage.add(NumScore);
     }
     // open windows when buttons are clocked
     public void actionPerformed(ActionEvent e){
@@ -136,10 +139,10 @@ public class HomePage extends JFrame implements ActionListener {
             VerbScore = verbScore;
         }
         //getter and setter for Number memory score
+
         public int getNumbScore() {
             return NumbScore;
         }
-
         public void setNumbScore(int numbScore) {
             NumbScore = numbScore;
         }
