@@ -23,21 +23,21 @@ public class HomePage extends JFrame implements ActionListener {
         System.out.println("current name is: " + current.getName());
         // button for verb memory page
         verb_mem_but = new JButton();//creates button
-        verb_mem_but.setBounds(5,100,150,50);// sets location and size of button
+        verb_mem_but.setBounds(5,200,150,50);// sets location and size of button
         verb_mem_but.setFocusable(false);
         verb_mem_but.setText("Verbal Memory");
         verb_mem_but.addActionListener(this);
 
         // button for number memory page
         num_mem_but = new JButton();
-        num_mem_but.setBounds(205,100,150,50);
+        num_mem_but.setBounds(205,200,150,50);
         num_mem_but.setFocusable(false);
         num_mem_but.setText("Number Memory");
         num_mem_but.addActionListener(this);
 
         // button for typing speed page
         type_speed_but = new JButton();
-        type_speed_but.setBounds(405,100,150,50);
+        type_speed_but.setBounds(405,200,150,50);
         type_speed_but.setFocusable(false);
         type_speed_but.setText("Typing Speed");
         type_speed_but.addActionListener(this);
@@ -72,7 +72,7 @@ public class HomePage extends JFrame implements ActionListener {
 
         CurrentName.setFont(new Font("Bold", Font.BOLD, 18));
         //sets the bounds of the labels and textfield
-        LabelName.setBounds(150, 400, 150, 25);
+        LabelName.setBounds(150, 400, 200, 25);
         EnterName.setBounds(300, 400, 150, 25);
         CurrentName.setBounds(150, 440, 300, 25);
         TypeScore.setBounds(25, 500, 150, 50);
