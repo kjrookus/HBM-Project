@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 // Home Page For HBM
 public class HomePage extends JFrame implements ActionListener {
@@ -16,11 +17,13 @@ public class HomePage extends JFrame implements ActionListener {
     JButton num_mem_but;
     JButton type_speed_but;
     private Profile current;
-
+    private boolean userExists = false;
+    Main.Helpbase UserDatabase = new Main.Helpbase();
+    Profile[] userbase = UserDatabase.getUserbase();
+    int usercount = UserDatabase.getUsercount();
 
     HomePage(Profile current_profile){
         current = current_profile;
-        System.out.println("current name is: " + current.getName());
         // button for verb memory page
         verb_mem_but = new JButton();//creates button
         verb_mem_but.setBounds(5,200,150,50);// sets location and size of button
@@ -57,9 +60,8 @@ public class HomePage extends JFrame implements ActionListener {
 
         ImageIcon image = new ImageIcon("HBT.png"); // create icon for frame using HBT icon from website
         this.setIconImage(image.getImage()); //set the icon to the frame
-
-
     }
+
 
     //generates the name field
     void NameField(JFrame Homepage){
@@ -80,8 +82,27 @@ public class HomePage extends JFrame implements ActionListener {
 
         //implements an action listener to the textfield
         EnterName.addActionListener(e -> {
-            current = new Profile(EnterName.getText());
+            //assumes new user
+            userExists = false;
+            //checks if the user is in the userbase
+            for(int i = 0; i < usercount; i++){
+                if(Objects.equals(userbase[i].getName(), EnterName.getText())){
+                    current = userbase[i];
+                    userExists = true;
+                    System.out.println("same");
+                }
+            }
+            if(!userExists) {
+                current = new Profile(EnterName.getText());
+                insert(current);
+            }
+            //resets the page but with current user
+            EnterName.setText("");
             CurrentName.setText("Current user: " + current.getName());
+            TypeScore.setText("WPM: " + current.getWpmScore());
+            NumScore.setText("Number Memory Score: " + current.getNumbScore());
+            UserDatabase.setUserbase(userbase);
+            UserDatabase.setUsercount(usercount);
         });
         //adds labels and textfield to homepage
         Homepage.add(LabelName);
@@ -89,6 +110,15 @@ public class HomePage extends JFrame implements ActionListener {
         Homepage.add(CurrentName);
         Homepage.add(TypeScore);
         HomePage.add(NumScore);
+    }
+
+    public void insert(Profile element){
+        if (userbase.length == usercount){
+            Profile[] newuserbase = new Profile[usercount*2];
+            System.arraycopy(userbase, 0, newuserbase, 0, usercount);
+            userbase = newuserbase;
+        }
+        userbase[usercount++] = element;
     }
     // open windows when buttons are clocked
     public void actionPerformed(ActionEvent e){
@@ -105,8 +135,11 @@ public class HomePage extends JFrame implements ActionListener {
             HomePage.dispose();
         }
     }
+
+
+
     static class Profile {
-        private String Name;
+        private final String Name;
         private int wpmScore = 0;
         private int VerbScore = 0;
         private int NumbScore = 0;
@@ -117,10 +150,6 @@ public class HomePage extends JFrame implements ActionListener {
         //getter and setter for profile name
         public String getName() {
             return Name;
-        }
-
-        public void setName(String name) {
-            Name = name;
         }
 
         //getter and setter for WPM score

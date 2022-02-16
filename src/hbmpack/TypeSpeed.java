@@ -46,7 +46,7 @@ public class TypeSpeed implements KeyListener, ActionListener {
             + "his inquiry, for, though it was surrounded by none of the grim and strange "
             + "features which were associated with the two crimes which I have already recorded, "
             + "still, the nature of the case and the exalted station of his client gave it a "
-            + "character of its own";
+            + "character of its own.";
 
     String test1 = "To learn to type quickly, practice often and adopt the proper technique. "
             + "Fix your posture, have adequate lighting, position your hands correctly over the "
