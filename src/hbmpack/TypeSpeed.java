@@ -39,7 +39,6 @@ public class TypeSpeed implements KeyListener, ActionListener {
     HomePage.Profile typecurrent;
 
 
-
     String test0 = "The landlady informed me that he had left the house shortly after eight"
             + " o'clock in the morning. I sat down beside the fire, however, with the intention "
             + "of awaiting him, however long he might be. I was already deeply interested in "
@@ -105,7 +104,7 @@ public class TypeSpeed implements KeyListener, ActionListener {
 
         // add home button
         frame.add(home_but);
-        home_but.setBounds(450,500, 125,50);// sets location and size of button
+        home_but.setBounds(450, 500, 125, 50); // sets location and size of button
         home_but.setFocusable(false);
         home_but.setText("Return to Menu");
         home_but.addActionListener(this);
@@ -117,13 +116,13 @@ public class TypeSpeed implements KeyListener, ActionListener {
     public double adjust(String input, String Goal) {
         int errors = 0;
         double adjustment = 0.0;
-        for(int i =0; i<input.length(); i++){
-            if(input.charAt(i) != Goal.charAt(i)){
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) != Goal.charAt(i)) {
                 errors++;
             }
         }
-        if(input.length() != 0) {
-            adjustment = (float)(input.length() - errors) / (float)input.length();
+        if (input.length() != 0) {
+            adjustment = (float) (input.length() - errors) / (float) input.length();
             System.out.println(adjustment);
         }
         return adjustment;
@@ -134,11 +133,11 @@ public class TypeSpeed implements KeyListener, ActionListener {
         //gets the length of the current test
         totalChars = testWords.getText().length();
 
-        if(typeWords.hasFocus() && typeWords.getText().length() ==0 ){
+        if (typeWords.hasFocus() && typeWords.getText().length() == 0) {
             start = LocalTime.now().toNanoOfDay(); //stores the time when the player starts
         }
 
-        if(typeWords.hasFocus() && typeWords.getText().length() == testWords.getText().length()){
+        if (typeWords.hasFocus() && typeWords.getText().length() == testWords.getText().length()) {
             typeWords.setEditable(false);
             System.out.println("The total chars: " + totalChars + "The timetaken in seconds: " + timeTaken);
             System.out.println(Wpm);
@@ -154,20 +153,20 @@ public class TypeSpeed implements KeyListener, ActionListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if(typeWords.hasFocus() && typeWords.getText().length() < testWords.getText().length()) {
+        if (typeWords.hasFocus() && typeWords.getText().length() < testWords.getText().length()) {
             int typedSoFar = typeWords.getText().length();
             end = LocalTime.now().toNanoOfDay(); //stores the time when finished
             timeTaken = ((end - start) / 1000000000.0); //calculates the time taken in seconds
             Wpm = (int) (((typedSoFar / 5) / timeTaken) * 60);
             wpm.setText("Words per minute: " + Wpm);
-            adjustedWpm.setText("Adjusted words per minute: " + ((int)(Wpm * adjust(typeWords.getText(), testWords.getText()))));
+            adjustedWpm.setText("Adjusted words per minute: " + ((int) (Wpm * adjust(typeWords.getText(), testWords.getText()))));
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()== home_but)
+        if (e.getSource() == home_but)
             new HomePage(typecurrent);
-            frame.dispose();
+        frame.dispose();
     }
 }
