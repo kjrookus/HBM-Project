@@ -21,26 +21,33 @@ public class HomePage extends JFrame implements ActionListener {
     Main.Helpbase UserDatabase = new Main.Helpbase();
     Profile[] userbase = UserDatabase.getUserbase();
     int usercount = UserDatabase.getUsercount();
+    JLabel humanBench;
 
     HomePage(Profile current_profile){
         current = current_profile;
+
+        // Label with Menu Title
+        humanBench = new JLabel("Human Benchmark", SwingConstants.CENTER);
+        humanBench.setBounds(50,50,500,100);
+        humanBench.setFont((new Font("Serif", Font.PLAIN, 40)));
+        HomePage.add(humanBench);
         // button for verb memory page
         verb_mem_but = new JButton();//creates button
-        verb_mem_but.setBounds(5,200,150,50);// sets location and size of button
+        verb_mem_but.setBounds(20,200,150,50);// sets location and size of button
         verb_mem_but.setFocusable(false);
         verb_mem_but.setText("Verbal Memory");
         verb_mem_but.addActionListener(this);
 
         // button for number memory page
         num_mem_but = new JButton();
-        num_mem_but.setBounds(205,200,150,50);
+        num_mem_but.setBounds(220,200,150,50);
         num_mem_but.setFocusable(false);
         num_mem_but.setText("Number Memory");
         num_mem_but.addActionListener(this);
 
         // button for typing speed page
         type_speed_but = new JButton();
-        type_speed_but.setBounds(405,200,150,50);
+        type_speed_but.setBounds(420,200,150,50);
         type_speed_but.setFocusable(false);
         type_speed_but.setText("Typing Speed");
         type_speed_but.addActionListener(this);
