@@ -15,10 +15,10 @@ import javax.swing.JTextArea;
  * Opens a GUI that displays one of three random typing tests.
  * Allows the user to type in a corresponding box while measuring
  * the speed they type in words per minute. Incorrect letters reduce
- * the users WPM
+ * the users adjusted WPM
  *
  * @author Kaden Rookus & Alex Bergers
- * @version 02/10/2022
+ * @version 02/20/2022
  * **********************************************************/
 
 public class TypeSpeed implements KeyListener, ActionListener {
@@ -113,6 +113,15 @@ public class TypeSpeed implements KeyListener, ActionListener {
 
     }
 
+    /**********************************************************************
+     *method to calculate the accuracy of the users currently typed message.
+     *
+     * @param input value is the string the user has inputted
+     * @param Goal is the targetted string that the input is compared against
+     *
+     *@return a double equal to correct characters divided by total characters
+     **********************************************************************/
+
     public double adjust(String input, String Goal) {
         int errors = 0;
         double adjustment = 0.0;
@@ -139,7 +148,8 @@ public class TypeSpeed implements KeyListener, ActionListener {
 
         if (typeWords.hasFocus() && typeWords.getText().length() == testWords.getText().length()) {
             typeWords.setEditable(false);
-            System.out.println("The total chars: " + totalChars + "The timetaken in seconds: " + timeTaken);
+            System.out.println("The total chars: " + totalChars +
+                    "The timetaken in seconds: " + timeTaken);
             System.out.println(Wpm);
             typecurrent.setWpmScore(Wpm);
             home_but.setVisible(true);
@@ -159,14 +169,16 @@ public class TypeSpeed implements KeyListener, ActionListener {
             timeTaken = ((end - start) / 1000000000.0); //calculates the time taken in seconds
             Wpm = (int) (((typedSoFar / 5) / timeTaken) * 60);
             wpm.setText("Words per minute: " + Wpm);
-            adjustedWpm.setText("Adjusted words per minute: " + ((int) (Wpm * adjust(typeWords.getText(), testWords.getText()))));
+            adjustedWpm.setText("Adjusted words per minute: " +
+                    ((int) (Wpm * adjust(typeWords.getText(), testWords.getText()))));
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == home_but)
+        if (e.getSource() == home_but) {
             new HomePage(typecurrent);
-        frame.dispose();
+            frame.dispose();
+        }
     }
 }

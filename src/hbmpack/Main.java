@@ -1,14 +1,27 @@
 package hbmpack;
 
+/**********************************************************
+ * Opens the Homepage GUI that allows for game selection.
+ * Additionally creates a local array userbase to store
+ * scores across games and profiles
+ *
+ * @author Kaden Rookus & Alex Bergers
+ * @version 02/20/2022
+ * **********************************************************/
 
 public class Main {
     private static HomePage.Profile[] userbase = new HomePage.Profile[10];
     private static int usercount = 0;
-    public static void main(String[] arg){
+
+    public static void main(String[] arg) {
         HomePage.Profile current = new HomePage.Profile("None");
         new HomePage(current);
     }
 
+    /**********************************************************
+     * Helpbase class is used to provide getters and setters
+     * for profiles in the profile userbase.
+     * **********************************/
     public static class Helpbase {
 
         public HomePage.Profile[] getUserbase() {
