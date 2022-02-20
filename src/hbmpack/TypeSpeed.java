@@ -1,12 +1,16 @@
 package hbmpack;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.time.LocalTime;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+
 
 /**********************************************************
  * Opens a GUI that displays one of three random typing tests.
@@ -145,8 +149,8 @@ public class TypeSpeed implements KeyListener, ActionListener {
 
         if (typeWords.hasFocus() && typeWords.getText().length() == testWords.getText().length()) {
             typeWords.setEditable(false);
-            System.out.println("The total chars: " + totalChars +
-                    "The timetaken in seconds: " + timeTaken);
+            System.out.println("The total chars: " + totalChars
+                    + "The timetaken in seconds: " + timeTaken);
             System.out.println(Wpm);
             typecurrent.setWpmScore(Wpm);
             home_but.setVisible(true);
