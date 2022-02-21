@@ -78,7 +78,7 @@ public class HomePage extends JFrame implements ActionListener {
 
 
     //generates the name field
-    void NameField(JFrame Homepage) {
+    final void NameField(JFrame Homepage) {
         //creates two labels and a textfield
         JLabel LabelName = new JLabel("Please enter your name: ");
         JLabel CurrentName = new JLabel("Current user: " + current.getName());
@@ -172,8 +172,8 @@ public class HomePage extends JFrame implements ActionListener {
         private int NumbScore = 0;
 
         //profile constructor
-        public Profile(String Name) {
-            this.Name = Name;
+        Profile(String UserName) {
+            this.Name = UserName;
         }
 
         //getter and setter for profile name
@@ -186,8 +186,8 @@ public class HomePage extends JFrame implements ActionListener {
             return wpmScore;
         }
 
-        public void setWpmScore(int wpmScore) {
-            this.wpmScore = wpmScore;
+        public void setWpmScore(int givenwpmScore) {
+            this.wpmScore = givenwpmScore;
         }
 
         //getter and setter for Verbal memory Score

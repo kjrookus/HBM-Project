@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.Math;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -165,11 +164,11 @@ public class NumMemory extends JFrame implements ActionListener {
      * starting the 5 second timer. After the timer finishes, the
      * number is hidden and the input box appears.
      *
-     * @param level current level the user is on determines the length
+     * @param curlevel current level the user is on determines the length
      * of the goal number
      * **********************************************************/
 
-    public void theGame(int level) {
+    public void theGame(int curlevel) {
         //shows the gamepanel and numbers, hides the input field
         game_panel.setVisible(true);
         numberTest.setVisible(true);
@@ -177,7 +176,7 @@ public class NumMemory extends JFrame implements ActionListener {
         //sets the textfield back to blank
         numbers.setText("");
         //generates a random number of size relative to level
-        shown_number = getRandomNumber((int) Math.pow(10, level - 1), (int) Math.pow(10, level));
+        shown_number = getRandomNumber((int) Math.pow(10, curlevel - 1), (int) Math.pow(10, curlevel));
         //sets the text to the random number
         numberTest.setText(String.valueOf(shown_number));
 
@@ -189,7 +188,7 @@ public class NumMemory extends JFrame implements ActionListener {
     }
 
     //random number generator between min and max
-    public int getRandomNumber(int min, int max) {
+    public static int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }
 

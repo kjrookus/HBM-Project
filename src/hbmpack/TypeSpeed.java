@@ -139,7 +139,7 @@ public class TypeSpeed implements KeyListener, ActionListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
+    public final void keyTyped(KeyEvent e) {
         //gets the length of the current test
         totalChars = testWords.getText().length();
 
@@ -158,12 +158,12 @@ public class TypeSpeed implements KeyListener, ActionListener {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public final void keyPressed(KeyEvent e) {
 
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public final void keyReleased(KeyEvent e) {
         if (typeWords.hasFocus() && typeWords.getText().length() < testWords.getText().length()) {
             int typedSoFar = typeWords.getText().length();
             end = LocalTime.now().toNanoOfDay(); //stores the time when finished
@@ -176,7 +176,7 @@ public class TypeSpeed implements KeyListener, ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public final void actionPerformed(ActionEvent e) {
         if (e.getSource() == home_but) {
             new HomePage(typecurrent);
             frame.dispose();

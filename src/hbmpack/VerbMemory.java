@@ -33,7 +33,7 @@ public class VerbMemory extends JFrame implements ActionListener {
         home_but.addActionListener(this);
     }
 
-    public void actionPerformed(ActionEvent e){
+    public final void actionPerformed(ActionEvent e){
         if (e.getSource()== home_but)
             VerbMemory.dispose();
             new HomePage(verbcurrent);

@@ -13,7 +13,7 @@ public class Main {
     private static HomePage.Profile[] userbase = new HomePage.Profile[10];
     private static int usercount = 0;
 
-    public static void main(String[] arg) {
+    public final void main(String[] arg) {
         HomePage.Profile current = new HomePage.Profile("None");
         new HomePage(current);
     }
@@ -24,21 +24,21 @@ public class Main {
      * **********************************/
     public static class Helpbase {
 
-        public HomePage.Profile[] getUserbase() {
+        public final HomePage.Profile[] getUserbase() {
             //System.out.println("hi" + userbase);
             return userbase;
         }
 
-        public void setUserbase(HomePage.Profile[] userbase2) {
+        public final void setUserbase(HomePage.Profile[] userbase2) {
             userbase = userbase2;
         }
 
-        public int getUsercount() {
+        public final int getUsercount() {
             System.out.println("getUsercount: " + usercount);
             return usercount;
         }
 
-        public void setUsercount(int usercount2) {
+        public final void setUsercount(int usercount2) {
             usercount = usercount2;
             System.out.println("setUsercount: " + usercount);
         }
