@@ -132,7 +132,7 @@ public class TypeSpeed implements KeyListener, ActionListener {
             }
         }
         if (input.length() != 0) {
-            adjustment = (float) (input.length() - errors) / (float) input.length();
+            adjustment = (double) (input.length() - errors) / (double) input.length();
             System.out.println(adjustment);
         }
         return adjustment;
