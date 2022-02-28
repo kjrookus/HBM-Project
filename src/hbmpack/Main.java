@@ -13,7 +13,7 @@ public class Main {
     private static HomePage.Profile[] userbase = new HomePage.Profile[10];
     private static int usercount = 0;
 
-    private static void main(String[] arg) {
+    public static void main(String[] arg) {
         HomePage.Profile current = new HomePage.Profile("None");
         new HomePage(current);
     }
