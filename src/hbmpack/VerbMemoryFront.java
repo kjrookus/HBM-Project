@@ -7,12 +7,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class VerbMemory extends JFrame implements ActionListener {
+public class VerbMemoryFront extends JFrame implements ActionListener {
     JFrame VerbMemory = new JFrame();
     JLabel label = new JLabel("Verbal Memory");
     JButton home_but;
+    JButton start_game;
     HomePage.Profile verbcurrent;
-    VerbMemory(HomePage.Profile current){
+    boolean gamerunning = false;
+    String goalWord;
+    int score;
+
+
+    VerbMemoryFront(HomePage.Profile current){
         verbcurrent = current;
 
         label.setBounds(0,0,1000,50);
@@ -28,16 +34,31 @@ public class VerbMemory extends JFrame implements ActionListener {
 
         home_but = new JButton();
         VerbMemory.add(home_but);
-        home_but.setBounds(300,0,150,50);// sets location and size of button
+        home_but.setBounds(220, 475, 150, 50);// sets location and size of button
         home_but.setFocusable(false);
         home_but.setText("Return to Menu");
         home_but.addActionListener(this);
+
+        // start button begins game
+        start_game = new JButton("start");
+        start_game.setBounds(220, 250, 150, 50);
+        start_game.addActionListener(this);
+        start_game.setVisible(true);
+        VerbMemory.add(start_game);
+
     }
 
     public final void actionPerformed(ActionEvent e){
-        if (e.getSource()== home_but)
+        if (e.getSource()== home_but) {
             VerbMemory.dispose();
             new HomePage(verbcurrent);
+        }
+        if(e.getSource() == start_game){
+            gamerunning = true;
+            VerbMemoryBack.startVerbmem();
+        }
+
+
     }
 }
 

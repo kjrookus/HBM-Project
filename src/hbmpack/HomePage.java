@@ -152,7 +152,7 @@ public class HomePage extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == verb_mem_but) {
-            new VerbMemory(current); // Verb memory page
+            new VerbMemoryFront(current); // Verb memory page
             HomePage.dispose();
         } else if (e.getSource() == num_mem_but) {
             new NumMemory(current); // num memory page
