@@ -1,20 +1,20 @@
 package hbmpack;
 
-import com.github.dhiraj072.randomwordgenerator.RandomWordGenerator;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 public class VerbMemoryFront extends JFrame implements ActionListener {
-    JFrame VerbMemory = new JFrame();
+    static JFrame VerbMemory = new JFrame();
     JLabel label = new JLabel("Verbal Memory");
 
-    JLabel scorelabel = new JLabel("");
-    JLabel lifeLabel = new JLabel("");
+    JLabel scorelabel = new JLabel();
+    JLabel lifeLabel = new JLabel();
+    JLabel title = new JLabel();
+    JTextArea subtitle = new JTextArea();
+
 
     JButton home_but;
     JButton start_game;
@@ -38,24 +38,49 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
 
 
     }
-    private final void setLabels(){
+    private void setLabels(){
 
         label.setBounds(0,0,1000,50);
         label.setFont(new Font(null, Font.PLAIN, 25));
 
-        goalword.setBounds(220, 250, 200, 100);
-        goalword.setFont(new Font(null, Font.PLAIN, 25));
+        goalword.setHorizontalAlignment(SwingConstants.CENTER);
+        goalword.setBounds(0, 250, 600, 100);
+        goalword.setFont(new Font(null, Font.PLAIN, 35));
 
+        scorelabel.setHorizontalAlignment(SwingConstants.CENTER);
         scorelabel.setBounds(175, 125, 125, 100);
         scorelabel.setFont(new Font(null, Font.PLAIN, 25));
+        scorelabel.setVisible(false);
 
+        lifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lifeLabel.setBounds(300, 125, 125, 100);
         lifeLabel.setFont(new Font(null, Font.PLAIN, 25));
+        lifeLabel.setVisible(false);
+
+        title.setText("Verbal Memory Test");
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setBounds(0, 100, 600, 100);
+        title.setFont(new Font(null, Font.PLAIN, 40));
+
+        subtitle.setText("You will be shown words, one at a time. If you've seen a word during the test, click SEEN. If it's a new word, click NEW.");
+        subtitle.setLineWrap(true);
+        subtitle.setWrapStyleWord(true);
+        subtitle.setOpaque(false);
+        subtitle.setFocusable(false);
+        subtitle.setEditable(false);
+        subtitle.setBackground(UIManager.getColor("Label.background"));
+        subtitle.setFont(UIManager.getFont("Label.font"));
+        subtitle.setBorder(UIManager.getBorder("Label.border"));
+        subtitle.setBounds(0, 200, 600, 150);
+        subtitle.setFont(new Font(null, Font.PLAIN, 20));
+
 
         VerbMemory.add(label);
         VerbMemory.add(goalword);
         VerbMemory.add(scorelabel);
         VerbMemory.add(lifeLabel);
+        VerbMemory.add(title);
+        VerbMemory.add(subtitle);
     }
 
     public final void setButtons(){
@@ -70,7 +95,7 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
 
         // start button begins game
         start_game = new JButton("start");
-        start_game.setBounds(225, 250, 150, 50);
+        start_game.setBounds(225, 350, 150, 50);
         start_game.addActionListener(this);
         start_game.setVisible(true);
         VerbMemory.add(start_game);
@@ -96,20 +121,29 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
         }
         if(e.getSource() == start_game){
            frontGame();
+            run();
         }
         if(e.getSource() == new_but){
-            VerbMemoryBack.neweval();
-            updatescorelives();
-            run();
+            if(!VerbMemoryBack.neweval()){
+                updatescorelives();
+                endgame();
+            }else {
+                updatescorelives();
+                run();
+            }
         }
         if(e.getSource() == seen_but){
-            VerbMemoryBack.seeneval();
-            updatescorelives();
-            run();
+            if(!VerbMemoryBack.seeneval()){
+                updatescorelives();
+                endgame();
+            }else {
+                updatescorelives();
+                run();
+            }
         }
     }
 
-    private final void updatescorelives(){
+    private void updatescorelives(){
         scorelabel.setText("Score: " + VerbMemoryBack.score);
         lifeLabel.setText("Lives: " + VerbMemoryBack.lives);
     }
@@ -122,12 +156,15 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
 
     public final void frontGame(){
         gamerunning = true;
+        title.setVisible(false);
+        subtitle.setVisible(false);
+        scorelabel.setVisible(true);
+        lifeLabel.setVisible(true);
         seen_but.setVisible(true);
         new_but.setVisible(true);
         start_game.setVisible(false);
         goalword.setVisible(true);
         home_but.setVisible(false);
-        run();
     }
     public void run(){
         String currentword = VerbMemoryBack.runVerbmem(checked);
@@ -135,6 +172,13 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
         count = VerbMemoryBack.count;
         checked[count] = currentword;
         goalword.setText(currentword);
+    }
+    private void endgame(){
+        verbcurrent.setVerbScore(VerbMemoryBack.score);
+        seen_but.setVisible(false);
+        new_but.setVisible(false);
+        goalword.setVisible(false);
+        home_but.setVisible(true);
     }
 }
 

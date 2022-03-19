@@ -32,37 +32,36 @@ public class VerbMemoryBack extends VerbMemoryFront{
             }
         return goalWord;
     }
-    public static final String wordGen(int count, String[] checked){
+    public static String wordGen(int count, String[] checked){
         String newWord;
         newWord = RandomWordGenerator.getRandomWord();
         for(int i = 0; i<count; i++){
-            if(newWord == checked[i]){
+            if(newWord.equals(checked[i])){
                 newWord = RandomWordGenerator.getRandomWord();
             }
         }
         return newWord;
     }
 
-    public static void neweval(){
+    public static boolean neweval(){
         if(!wordSeen){
             score++;
+            return true;
         }else{
             lives--;
-            if(lives==0){
-                System.out.println("end2");
-            }
+            return lives != 0;
         }
     }
 
-    public static void seeneval(){
+    public static boolean seeneval(){
         if(wordSeen){
             score++;
+            return true;
         }else{
             lives--;
-            if(lives==0){
-                System.out.println("end");
-            }
+            return lives != 0;
         }
     }
+
 
 }
