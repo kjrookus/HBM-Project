@@ -1,14 +1,10 @@
 package hbmpack;
 
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 /**********************************************************
  * Opens a GUI that displays the Homepage which allows for
@@ -29,6 +25,7 @@ public class HomePage extends JFrame implements ActionListener {
     JButton verb_mem_but;
     JButton num_mem_but;
     JButton type_speed_but;
+    JButton reaction_time_but;
     private Profile current;
     private boolean userExists = false;
     Main.Helpbase UserDatabase = new Main.Helpbase();
@@ -58,6 +55,12 @@ public class HomePage extends JFrame implements ActionListener {
         type_speed_but.setText("Typing Speed");
         type_speed_but.addActionListener(this);
 
+        reaction_time_but = new JButton();
+        reaction_time_but.setBounds(5,300,150,50);
+        reaction_time_but.setFocusable(false);
+        reaction_time_but.setText("Reaction Time");
+        reaction_time_but.addActionListener(this);
+
         NameField(HomePage);
 
         HomePage.setTitle("Human BenchMark Test"); // Sets Title
@@ -70,6 +73,8 @@ public class HomePage extends JFrame implements ActionListener {
         HomePage.add(verb_mem_but);
         HomePage.add(num_mem_but);
         HomePage.add(type_speed_but);
+        HomePage.add(reaction_time_but);
+
 
         // create icon for frame using HBT icon from website
         ImageIcon image = new ImageIcon("HBT.png");
@@ -154,12 +159,19 @@ public class HomePage extends JFrame implements ActionListener {
         if (e.getSource() == verb_mem_but) {
             new VerbMemoryFront(current); // Verb memory page
             HomePage.dispose();
-        } else if (e.getSource() == num_mem_but) {
+        }
+        else if (e.getSource() == num_mem_but) {
             new NumMemory(current); // num memory page
             HomePage.dispose();
-        } else if (e.getSource() == type_speed_but) {
+        }
+        else if (e.getSource() == type_speed_but) {
             new TypeSpeed(current); // type Speed page
             HomePage.dispose();
+        }
+        else if (e.getSource()== reaction_time_but){
+            new reactionTime(current);
+            HomePage.dispose();
+
         }
     }
 
