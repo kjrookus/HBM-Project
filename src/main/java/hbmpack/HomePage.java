@@ -89,6 +89,7 @@ public class HomePage extends JFrame implements ActionListener {
         JLabel CurrentName = new JLabel("Current user: " + current.getName());
         JLabel TypeScore = new JLabel("WPM: " + current.getWpmScore());
         JLabel NumScore = new JLabel("Number Memory Score: " + current.getNumbScore());
+        JLabel verbScore = new JLabel("Verbal Memory Score: " + current.getVerbScore());
         JTextField EnterName = new JTextField();
 
         CurrentName.setFont(new Font("Bold", Font.BOLD, 18));
@@ -98,6 +99,7 @@ public class HomePage extends JFrame implements ActionListener {
         CurrentName.setBounds(150, 440, 300, 25);
         TypeScore.setBounds(25, 500, 150, 50);
         NumScore.setBounds(25, 480, 200, 50);
+        verbScore.setBounds(225, 480, 200, 50);
 
         //implements an action listener to the textfield
         EnterName.addActionListener(e -> {
@@ -120,6 +122,7 @@ public class HomePage extends JFrame implements ActionListener {
             CurrentName.setText("Current user: " + current.getName());
             TypeScore.setText("WPM: " + current.getWpmScore());
             NumScore.setText("Number Memory Score: " + current.getNumbScore());
+            verbScore.setText("Verbal Memory Score: " + current.getVerbScore());
             UserDatabase.setUserbase(userbase);
             UserDatabase.setUsercount(usercount);
         });
@@ -129,6 +132,7 @@ public class HomePage extends JFrame implements ActionListener {
         Homepage.add(CurrentName);
         Homepage.add(TypeScore);
         HomePage.add(NumScore);
+        Homepage.add(verbScore);
     }
 
     /**********************************************************
