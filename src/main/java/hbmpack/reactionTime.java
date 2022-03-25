@@ -12,6 +12,8 @@ public class reactionTime extends JFrame implements ActionListener {
     JLabel click = new JLabel();
     JButton start = new JButton("Start");
     JButton home_but = new JButton();
+    JButton redBut = new JButton("test");
+    Timer delay;
 
     HomePage.Profile reactCurrent;
 
@@ -53,18 +55,48 @@ public class reactionTime extends JFrame implements ActionListener {
         reactionTime.add(start);
 
         // add home button
-        home_but = new JButton();
         reactionTime.add(home_but);
         home_but.setBounds(220, 475, 150, 50); // sets location and size of button
         home_but.setFocusable(false);
         home_but.setText("Return to Menu");
         home_but.addActionListener(this);
+
+        redBut.setBounds(0,0,600,600);
+        redBut.setVisible(false);
+        redBut.setFocusable(true);
+        redBut.addActionListener(this);
+        redBut.setBackground(Color.red);
+        redBut.setOpaque(true);
+        redBut.setBorder(null);
+        reactionTime.add(redBut);
+
+
     }
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == home_but) {
             new HomePage(reactCurrent);
             reactionTime.dispose();
+        }
+        if (e.getSource() == start){
+            theGame();
+        }
+        if (e.getSource() == start){
 
         }
+
+    }
+
+    public void theGame(){
+        redBut.setVisible(true);
+        start.setVisible(false);
+        click.setVisible(false);
+        title.setVisible(false);
+        subtitle.setVisible(false);
+        home_but.setVisible(false);
+
+        //delay = new Timer(5000, this);
+        //delay.setRepeats(false);
+        //delay.start();
+
     }
 }
