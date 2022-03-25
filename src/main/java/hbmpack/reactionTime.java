@@ -78,7 +78,7 @@ public class reactionTime extends JFrame implements ActionListener {
         home_but.addActionListener(this);
 
     }
-    Timer timer = new Timer(1000, e -> elapsedTime+=1000);
+    Timer timer = new Timer(1, e -> elapsedTime+=1);
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == home_but) {
