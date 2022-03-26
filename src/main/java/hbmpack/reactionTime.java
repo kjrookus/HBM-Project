@@ -14,11 +14,10 @@ public class reactionTime extends JFrame implements ActionListener {
     JButton redBut = new JButton();
     JPanel panel = new JPanel();
     Timer delay;
-    JLabel results = new JLabel();
+    JLabel results = new JLabel("",SwingConstants.CENTER);
 
-    int elapsedTime = 0;
-    boolean test= false;
-    int randomDelay = 5000 + (int)(Math.random()*((15000 - 5000)+1));
+    int elapsedTime;
+    boolean test;
 
     HomePage.Profile reactCurrent;
 
@@ -37,7 +36,6 @@ public class reactionTime extends JFrame implements ActionListener {
         panel.setLayout(null);
         this.add(panel);
 
-        results.setText("Too Soon! Press Try Again to restart!");
         results.setBounds(100,200,600,100);
         results.setVisible(false);
         results.setFont((new Font("Serif", Font.PLAIN, 25)));
@@ -95,6 +93,7 @@ public class reactionTime extends JFrame implements ActionListener {
                 start.setText("Try Again");
                 start.setVisible(true);
                 home_but.setVisible(true);
+                results.setText("Too Soon! Press Try Again to restart!");
             }
             if (test) {
                 timer.stop();
@@ -103,7 +102,7 @@ public class reactionTime extends JFrame implements ActionListener {
                 start.setText("Try Again");
                 start.setVisible(true);
                 home_but.setVisible(true);
-                results.setText("Time: " + elapsedTime);
+                results.setText("Time: " + elapsedTime + "ms");
             }
         }
         if (e.getSource() == delay){
@@ -132,6 +131,9 @@ public class reactionTime extends JFrame implements ActionListener {
         subtitle.setVisible(false);
         home_but.setVisible(false);
 
+        elapsedTime = 0;
+        test= false;
+        int randomDelay = 3000 + (int)(Math.random()*((10000 - 3000)+1));
         delay = new Timer(randomDelay, this);
         delay.setRepeats(true);
         delay.start();
