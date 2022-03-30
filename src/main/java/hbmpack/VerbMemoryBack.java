@@ -1,12 +1,7 @@
 package hbmpack;
 
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import com.github.dhiraj072.randomwordgenerator.RandomWordGenerator;
+
 
 public class VerbMemoryBack extends VerbMemoryFront{
 
@@ -21,7 +16,7 @@ public class VerbMemoryBack extends VerbMemoryFront{
     public static String runVerbmem(String[] checked){
         String goalWord;
             //half the time generates a new word, half the time takes an existing word
-            if((int)(Math.random()*2) % 2 == 0) {
+            if(((int)(Math.random()*2) % 2 == 0) || count == 0) {
                 goalWord = wordGen(count, checked);
                 checked[count] = goalWord;
                 count++;

@@ -7,27 +7,29 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class VerbMemoryFront extends JFrame implements ActionListener {
-    static JFrame VerbMemory = new JFrame();
-    JLabel label = new JLabel("Verbal Memory");
+    JFrame VerbMemory = new JFrame();
 
     JLabel scorelabel = new JLabel();
     JLabel lifeLabel = new JLabel();
     JLabel title = new JLabel();
     JTextArea subtitle = new JTextArea();
 
-
     JButton home_but;
     JButton start_game;
     JButton seen_but;
     JButton new_but;
-
+    JButton tryagain_but;
     JLabel goalword = new JLabel();
     HomePage.Profile verbcurrent;
 
     VerbMemoryFront(HomePage.Profile current){
         verbcurrent = current;
+
         setLabels();
         setButtons();
+        VerbMemoryBack.score = 0;
+        VerbMemoryBack.lives = 3;
+        VerbMemoryBack.count = 0;
         updatescorelives();
 
         VerbMemory.setTitle("Verbal Memory"); // Sets Title
@@ -39,10 +41,6 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
 
     }
     private void setLabels(){
-
-        label.setBounds(0,0,1000,50);
-        label.setFont(new Font(null, Font.PLAIN, 25));
-
         goalword.setHorizontalAlignment(SwingConstants.CENTER);
         goalword.setBounds(0, 250, 600, 100);
         goalword.setFont(new Font(null, Font.PLAIN, 35));
@@ -62,6 +60,7 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
         title.setBounds(0, 100, 600, 100);
         title.setFont(new Font(null, Font.PLAIN, 40));
 
+
         subtitle.setText("You will be shown words, one at a time. If you've seen a word during the test, click SEEN. If it's a new word, click NEW.");
         subtitle.setLineWrap(true);
         subtitle.setWrapStyleWord(true);
@@ -75,7 +74,6 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
         subtitle.setFont(new Font(null, Font.PLAIN, 20));
 
 
-        VerbMemory.add(label);
         VerbMemory.add(goalword);
         VerbMemory.add(scorelabel);
         VerbMemory.add(lifeLabel);
@@ -112,10 +110,16 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
         new_but.setVisible(false);
         VerbMemory.add(new_but);
 
+        tryagain_but = new JButton("Try Again?");
+        tryagain_but.setBounds(225, 425, 150, 50);
+        tryagain_but.addActionListener(this);
+        tryagain_but.setVisible(false);
+        VerbMemory.add(tryagain_but);
 
     }
     public void actionPerformed(ActionEvent e){
         if (e.getSource()== home_but) {
+
             VerbMemory.dispose();
             new HomePage(verbcurrent);
         }
@@ -140,6 +144,11 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
                 updatescorelives();
                 run();
             }
+        }
+        if(e.getSource() == tryagain_but){
+            verbcurrent.setVerbScore(VerbMemoryBack.score);
+            VerbMemory.dispose();
+            new VerbMemoryFront(verbcurrent);
         }
     }
 
@@ -175,10 +184,15 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
     }
     private void endgame(){
         verbcurrent.setVerbScore(VerbMemoryBack.score);
+        title.setVisible(true);
+        lifeLabel.setVisible(false);
+        scorelabel.setBounds(0, 200, 600, 100);
+        scorelabel.setFont(new Font(null, Font.PLAIN, 40));
         seen_but.setVisible(false);
         new_but.setVisible(false);
         goalword.setVisible(false);
         home_but.setVisible(true);
+        tryagain_but.setVisible(true);
     }
 }
 
