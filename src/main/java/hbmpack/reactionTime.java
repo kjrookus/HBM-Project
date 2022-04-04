@@ -36,7 +36,6 @@ public class reactionTime extends JFrame implements ActionListener {
         panel.setLayout(null);
         this.add(panel);
 
-        results.setBounds(100,200,600,100);
         results.setVisible(false);
         results.setFont((new Font("Serif", Font.PLAIN, 25)));
         this.add(results);
@@ -112,7 +111,6 @@ public class reactionTime extends JFrame implements ActionListener {
         }
     }
 
-
     public void theGame(){
         redBut.setBounds(0,0,600,600);
         redBut.setVisible(false);
@@ -123,7 +121,7 @@ public class reactionTime extends JFrame implements ActionListener {
         redBut.addActionListener(this);
         panel.add(redBut);
         redBut.setVisible(true);
-
+        results.setBounds(50,200,600,100);
         panel.setVisible(true);
         start.setVisible(false);
         click.setVisible(false);
