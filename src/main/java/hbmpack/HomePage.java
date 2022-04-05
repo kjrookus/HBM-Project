@@ -26,6 +26,7 @@ public class HomePage extends JFrame implements ActionListener {
     JButton num_mem_but;
     JButton type_speed_but;
     JButton reaction_time_but;
+    JButton sequence_mem_but;
     private Profile current;
     private boolean userExists = false;
     Main.Helpbase UserDatabase = new Main.Helpbase();
@@ -55,12 +56,19 @@ public class HomePage extends JFrame implements ActionListener {
         type_speed_but.setText("Typing Speed");
         type_speed_but.addActionListener(this);
 
+        //reaction time button
         reaction_time_but = new JButton();
         reaction_time_but.setBounds(5,300,150,50);
         reaction_time_but.setFocusable(false);
         reaction_time_but.setText("Reaction Time");
         reaction_time_but.addActionListener(this);
 
+        //sequence memory button
+        sequence_mem_but = new JButton();
+        sequence_mem_but.setBounds(205, 300, 150, 50);
+        sequence_mem_but.setFocusable(false);
+        sequence_mem_but.setText("Sequence Memory");
+        sequence_mem_but.addActionListener(this);
         NameField(HomePage);
 
         HomePage.setTitle("Human BenchMark Test"); // Sets Title
@@ -74,6 +82,7 @@ public class HomePage extends JFrame implements ActionListener {
         HomePage.add(num_mem_but);
         HomePage.add(type_speed_but);
         HomePage.add(reaction_time_but);
+        HomePage.add(sequence_mem_but);
 
 
         // create icon for frame using HBT icon from website
@@ -82,7 +91,7 @@ public class HomePage extends JFrame implements ActionListener {
     }
 
 
-    //generates the name field
+    //generates the name field and corresponding data
     final void NameField(JFrame Homepage) {
         //creates two labels and a textfield
         JLabel LabelName = new JLabel("Please enter your name: ");
@@ -90,6 +99,7 @@ public class HomePage extends JFrame implements ActionListener {
         JLabel TypeScore = new JLabel("WPM: " + current.getWpmScore());
         JLabel NumScore = new JLabel("Number Memory Score: " + current.getNumbScore());
         JLabel verbScore = new JLabel("Verbal Memory Score: " + current.getVerbScore());
+        JLabel seqScore = new JLabel("Sequence Memory Score: " + current.getSeqScore());
         JTextField EnterName = new JTextField();
 
         CurrentName.setFont(new Font("Bold", Font.BOLD, 18));
@@ -97,9 +107,11 @@ public class HomePage extends JFrame implements ActionListener {
         LabelName.setBounds(150, 400, 200, 25);
         EnterName.setBounds(300, 400, 150, 25);
         CurrentName.setBounds(150, 440, 300, 25);
-        TypeScore.setBounds(25, 500, 150, 50);
-        NumScore.setBounds(25, 480, 200, 50);
-        verbScore.setBounds(225, 480, 200, 50);
+
+        TypeScore.setBounds(405, 480, 200, 50);
+        NumScore.setBounds(205, 480, 200, 50);
+        verbScore.setBounds(5, 480, 200, 50);
+        seqScore.setBounds(205, 500,200, 50);
 
         //implements an action listener to the textfield
         EnterName.addActionListener(e -> {
@@ -123,16 +135,18 @@ public class HomePage extends JFrame implements ActionListener {
             TypeScore.setText("WPM: " + current.getWpmScore());
             NumScore.setText("Number Memory Score: " + current.getNumbScore());
             verbScore.setText("Verbal Memory Score: " + current.getVerbScore());
+            seqScore.setText("Sequence Memory Score: " + current.getSeqScore());
             UserDatabase.setUserbase(userbase);
             UserDatabase.setUsercount(usercount);
         });
         //adds labels and textfield to homepage
-        Homepage.add(LabelName);
-        Homepage.add(EnterName);
-        Homepage.add(CurrentName);
-        Homepage.add(TypeScore);
+        HomePage.add(LabelName);
+        HomePage.add(EnterName);
+        HomePage.add(CurrentName);
+        HomePage.add(TypeScore);
         HomePage.add(NumScore);
-        Homepage.add(verbScore);
+        HomePage.add(verbScore);
+        HomePage.add(seqScore);
     }
 
     /**********************************************************
@@ -175,7 +189,9 @@ public class HomePage extends JFrame implements ActionListener {
         else if (e.getSource()== reaction_time_but){
             new reactionTime(current);
             HomePage.dispose();
-
+        }else if(e.getSource() == sequence_mem_but){
+            new seqMemory(current);
+            HomePage.dispose();
         }
     }
 
@@ -186,6 +202,15 @@ public class HomePage extends JFrame implements ActionListener {
         private int wpmScore = 0;
         private int VerbScore = 0;
         private int NumbScore = 0;
+        private int seqScore = 0;
+
+        public int getSeqScore() {
+            return seqScore;
+        }
+
+        public void setSeqScore(int seqScore) {
+            this.seqScore = seqScore;
+        }
 
         //profile constructor
         Profile(String UserName) {

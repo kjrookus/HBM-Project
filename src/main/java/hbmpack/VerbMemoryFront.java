@@ -12,7 +12,9 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
     JLabel scorelabel = new JLabel();
     JLabel lifeLabel = new JLabel();
     JLabel title = new JLabel();
-    JTextArea subtitle = new JTextArea();
+    JLabel subtitle1 = new JLabel();
+    JLabel subtitle2 = new JLabel();
+    JLabel subtitle3 = new JLabel();
 
     JButton home_but;
     JButton start_game;
@@ -60,25 +62,30 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
         title.setBounds(0, 100, 600, 100);
         title.setFont(new Font(null, Font.PLAIN, 40));
 
+        subtitle1.setText("You will be shown words, one at a time.");
+        subtitle1.setHorizontalAlignment(SwingConstants.CENTER);
+        subtitle1.setBounds(100, 175, 400, 50);
+        subtitle1.setFont(new Font(null, Font.PLAIN, 20));
 
-        subtitle.setText("You will be shown words, one at a time. If you've seen a word during the test, click SEEN. If it's a new word, click NEW.");
-        subtitle.setLineWrap(true);
-        subtitle.setWrapStyleWord(true);
-        subtitle.setOpaque(false);
-        subtitle.setFocusable(false);
-        subtitle.setEditable(false);
-        subtitle.setBackground(UIManager.getColor("Label.background"));
-        subtitle.setFont(UIManager.getFont("Label.font"));
-        subtitle.setBorder(UIManager.getBorder("Label.border"));
-        subtitle.setBounds(0, 200, 600, 150);
-        subtitle.setFont(new Font(null, Font.PLAIN, 20));
+        subtitle2.setText("If you've seen a word during the test, click SEEN.");
+        subtitle2.setHorizontalAlignment(SwingConstants.CENTER);
+        subtitle2.setBounds(75, 200, 450, 50);
+        subtitle2.setFont(new Font(null, Font.PLAIN, 20));
+
+        subtitle3.setText("If it's a new word, click NEW.");
+        subtitle3.setHorizontalAlignment(SwingConstants.CENTER);
+        subtitle3.setBounds(100, 225, 400, 50);
+        subtitle3.setFont(new Font(null, Font.PLAIN, 20));
+
 
 
         VerbMemory.add(goalword);
         VerbMemory.add(scorelabel);
         VerbMemory.add(lifeLabel);
         VerbMemory.add(title);
-        VerbMemory.add(subtitle);
+        VerbMemory.add(subtitle1);
+        VerbMemory.add(subtitle2);
+        VerbMemory.add(subtitle3);
     }
 
     public final void setButtons(){
@@ -166,7 +173,9 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
     public final void frontGame(){
         gamerunning = true;
         title.setVisible(false);
-        subtitle.setVisible(false);
+        subtitle1.setVisible(false);
+        subtitle2.setVisible(false);
+        subtitle3.setVisible(false);
         scorelabel.setVisible(true);
         lifeLabel.setVisible(true);
         seen_but.setVisible(true);
