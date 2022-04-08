@@ -1,5 +1,5 @@
 package hbmpack;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -63,9 +63,25 @@ public class seqMemory implements ActionListener{
     }
     public void actionPerformed(ActionEvent e){
         if (e.getSource()== home_but) {
-
            frame.dispose();
            new HomePage(seqcurrent);
         }
+        if(e.getSource() == start_game){
+            cleartitlescreen();
+            creategrid();
+        }
+    }
+
+    public void cleartitlescreen(){
+        home_but.setVisible(false);
+        start_game.setVisible(false);
+        title.setVisible(false);
+        subtitle.setVisible(false);
+    }
+    public void creategrid(){
+        JButton rOnecOne = new JButton();
+        rOnecOne.setBackground(Color.black);
+        rOnecOne.setBounds(100, 100, 100, 100);
+        frame.add(rOnecOne);
     }
 }

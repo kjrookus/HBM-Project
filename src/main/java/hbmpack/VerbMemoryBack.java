@@ -1,7 +1,7 @@
 package hbmpack;
-
-import com.github.dhiraj072.randomwordgenerator.RandomWordGenerator;
-
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class VerbMemoryBack extends VerbMemoryFront{
 
@@ -17,7 +17,7 @@ public class VerbMemoryBack extends VerbMemoryFront{
         String goalWord;
             //half the time generates a new word, half the time takes an existing word
             if(((int)(Math.random()*2) % 2 == 0) || count == 0) {
-                goalWord = wordGen(count, checked);
+                goalWord = wordgen();
                 checked[count] = goalWord;
                 count++;
                 wordSeen = false;
@@ -25,19 +25,9 @@ public class VerbMemoryBack extends VerbMemoryFront{
                 goalWord = checked[(int)(Math.random() *count)];
                 wordSeen = true;
             }
+            System.out.println(goalWord);
         return goalWord;
     }
-    public static String wordGen(int count, String[] checked){
-        String newWord;
-        newWord = RandomWordGenerator.getRandomWord();
-        for(int i = 0; i<count; i++){
-            if(newWord.equals(checked[i])){
-                newWord = RandomWordGenerator.getRandomWord();
-            }
-        }
-        return newWord;
-    }
-
     public static boolean neweval(){
         if(!wordSeen){
             score++;
@@ -58,5 +48,20 @@ public class VerbMemoryBack extends VerbMemoryFront{
         }
     }
 
+    public static String wordgen(){
+        try{
+            FileInputStream fis = new FileInputStream("src/main/java/hbmpack/1-1000.txt");
+            Scanner scan = new Scanner(fis);
+            for(int i = 1; i< Math.random()*1000; i++){
+                scan.nextLine();
+            }
+            if(scan.hasNextLine()){
+                return scan.nextLine();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
