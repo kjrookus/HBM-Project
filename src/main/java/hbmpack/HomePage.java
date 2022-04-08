@@ -100,6 +100,7 @@ public class HomePage extends JFrame implements ActionListener {
         JLabel NumScore = new JLabel("Number Memory Score: " + current.getNumbScore());
         JLabel verbScore = new JLabel("Verbal Memory Score: " + current.getVerbScore());
         JLabel seqScore = new JLabel("Sequence Memory Score: " + current.getSeqScore());
+        JLabel reactScore = new JLabel("Reaction Time Score: " + current.getReactScore() + "ms");
         JTextField EnterName = new JTextField();
 
         CurrentName.setFont(new Font("Bold", Font.BOLD, 18));
@@ -112,6 +113,7 @@ public class HomePage extends JFrame implements ActionListener {
         NumScore.setBounds(205, 480, 200, 50);
         verbScore.setBounds(5, 480, 200, 50);
         seqScore.setBounds(205, 500,200, 50);
+        reactScore.setBounds(5,500,200,50);
 
         //implements an action listener to the textfield
         EnterName.addActionListener(e -> {
@@ -136,6 +138,7 @@ public class HomePage extends JFrame implements ActionListener {
             NumScore.setText("Number Memory Score: " + current.getNumbScore());
             verbScore.setText("Verbal Memory Score: " + current.getVerbScore());
             seqScore.setText("Sequence Memory Score: " + current.getSeqScore());
+            reactScore.setText("Reaction time Score: " + current.getReactScore() + "ms");
             UserDatabase.setUserbase(userbase);
             UserDatabase.setUsercount(usercount);
         });
@@ -147,6 +150,7 @@ public class HomePage extends JFrame implements ActionListener {
         HomePage.add(NumScore);
         HomePage.add(verbScore);
         HomePage.add(seqScore);
+        Homepage.add(reactScore);
     }
 
     /**********************************************************
@@ -203,6 +207,7 @@ public class HomePage extends JFrame implements ActionListener {
         private int VerbScore = 0;
         private int NumbScore = 0;
         private int seqScore = 0;
+        private int react = 0;
 
         public int getSeqScore() {
             return seqScore;
@@ -248,5 +253,9 @@ public class HomePage extends JFrame implements ActionListener {
         public void setNumbScore(int numbScore) {
             NumbScore = numbScore;
         }
+
+        public void setReactScore(int reactScore){react = reactScore;}
+
+        public int getReactScore(){return react;}
     }
 }

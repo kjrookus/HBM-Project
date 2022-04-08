@@ -101,6 +101,7 @@ public class reactionTime extends JFrame implements ActionListener {
                 start.setText("Try Again");
                 start.setVisible(true);
                 home_but.setVisible(true);
+                reactCurrent.setReactScore(elapsedTime);
                 results.setText("Time: " + elapsedTime + "ms");
             }
         }
