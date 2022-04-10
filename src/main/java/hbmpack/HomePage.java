@@ -27,6 +27,7 @@ public class HomePage extends JFrame implements ActionListener {
     JButton type_speed_but;
     JButton reaction_time_but;
     JButton sequence_mem_but;
+    JButton chimpTestBut;
     private Profile current;
     private boolean userExists = false;
     Main.Helpbase UserDatabase = new Main.Helpbase();
@@ -77,13 +78,19 @@ public class HomePage extends JFrame implements ActionListener {
         HomePage.setSize(600, 600); //set dimension
         HomePage.setVisible(true); //make frame visible
 
+        chimpTestBut = new JButton();
+        chimpTestBut.setBounds(405,300,150,50);
+        chimpTestBut.setFocusable(false);
+        chimpTestBut.setText("Chimp Test");
+        chimpTestBut.addActionListener(this);
+
         // add buttons for each separate page
         HomePage.add(verb_mem_but);
         HomePage.add(num_mem_but);
         HomePage.add(type_speed_but);
         HomePage.add(reaction_time_but);
         HomePage.add(sequence_mem_but);
-
+        HomePage.add(chimpTestBut);
 
         // create icon for frame using HBT icon from website
         ImageIcon image = new ImageIcon("HBT.png");
@@ -195,6 +202,9 @@ public class HomePage extends JFrame implements ActionListener {
             HomePage.dispose();
         }else if(e.getSource() == sequence_mem_but){
             new seqMemory(current);
+            HomePage.dispose();
+        }else if(e.getSource()==chimpTestBut){
+            new chimpTest(current);
             HomePage.dispose();
         }
     }
