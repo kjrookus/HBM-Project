@@ -12,7 +12,10 @@ public class chimpTest extends JFrame implements ActionListener {
     JButton start = new JButton("Start");
     JButton home_but = new JButton();
     JPanel gamePanel = new JPanel();
-    int z = 4;
+    JLabel finalScore = new JLabel();
+    int size = 4;
+    int scoreTracker = 0;
+    JButton[]butArray = new JButton[100];
 
     HomePage.Profile chimpCurrent;
     public chimpTest(HomePage.Profile current){
@@ -38,6 +41,11 @@ public class chimpTest extends JFrame implements ActionListener {
         subtitle.setVisible(true);
         this.add(subtitle);
 
+        finalScore.setBounds(0,200,600,100);
+        finalScore.setFont(new Font(null,Font.PLAIN,20));
+        finalScore.setVisible(false);
+        this.add(finalScore);
+
         start.setHorizontalAlignment(SwingConstants.CENTER);
         start.setBounds(250, 300, 100, 50);
         start.addActionListener(this);
@@ -52,9 +60,9 @@ public class chimpTest extends JFrame implements ActionListener {
         home_but.addActionListener(this);
 
         gamePanel.setVisible(false);
-        gamePanel.setBounds(150,150,300,300);
+        gamePanel.setBounds(100,100,400,300);
         gamePanel.setBackground(Color.gray);
-        gamePanel.setLayout(null);
+        gamePanel.setLayout(new GridLayout(8,8,10,10));
         this.add(gamePanel);
     }
     public void actionPerformed(ActionEvent e) {
@@ -65,16 +73,37 @@ public class chimpTest extends JFrame implements ActionListener {
         if (e.getSource() == start){
             theGame();
         }
+        for(int r=0;r<size;r++){
+            if(e.getSource() == butArray[r] &&  r == scoreTracker){
+                butArray[r].setVisible(false);
+                scoreTracker++;
+                if(e.getSource() == butArray[size-1]){
+                    size = size + 1;
+                    scoreTracker =0;
+                    initialize(size);
+                }
+            }
+            else if(e.getSource()==butArray[r] && r != scoreTracker){
+                gamePanel.setVisible(false);}
+        }
     }
 
-    public void theGame(){
+
+    private void theGame(){
         start.setVisible(false);
         title.setVisible(false);
         subtitle.setVisible(false);
         gamePanel.setVisible(true);
-        int i;
-        for(i=0;i<z;i++){
-            gamePanel.add(new JButton(String.valueOf(i+1)));
+        initialize(size);
+    }
+
+    private void initialize(int size){
+        for(int x = 0; x < size; x++){
+            butArray[x] = new JButton(String.valueOf(x + 1));
+            butArray[x].addActionListener(this);
+            butArray[x].setSize(20,20);
+            gamePanel.add(butArray[x]);
         }
     }
+
 }
