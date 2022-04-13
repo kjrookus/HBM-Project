@@ -54,15 +54,15 @@ public class chimpTest extends JFrame implements ActionListener {
 
         // add home button
         this.add(home_but);
-        home_but.setBounds(220, 475, 150, 50); // sets location and size of button
+        home_but.setBounds(220, 500, 150, 50); // sets location and size of button
         home_but.setFocusable(false);
         home_but.setText("Return to Menu");
         home_but.addActionListener(this);
 
         gamePanel.setVisible(false);
-        gamePanel.setBounds(100,100,400,300);
+        gamePanel.setBounds(100,100,400,400);
         gamePanel.setBackground(Color.gray);
-        gamePanel.setLayout(new GridLayout(8,8,10,10));
+        gamePanel.setLayout(null);
         this.add(gamePanel);
     }
     public void actionPerformed(ActionEvent e) {
@@ -77,10 +77,16 @@ public class chimpTest extends JFrame implements ActionListener {
             if(e.getSource() == butArray[r] &&  r == scoreTracker){
                 butArray[r].setVisible(false);
                 scoreTracker++;
+                for(int x = 0; x < size; x++){
+                    butArray[x].setForeground(Color.white);
+                    butArray[x].setBackground(Color.gray);
+                }
                 if(e.getSource() == butArray[size-1]){
                     size = size + 1;
                     scoreTracker =0;
+                    gamePanel.repaint();
                     initialize(size);
+                    chimpCurrent.setChimp(size);
                 }
             }
             else if(e.getSource()==butArray[r] && r != scoreTracker){
@@ -101,9 +107,14 @@ public class chimpTest extends JFrame implements ActionListener {
         for(int x = 0; x < size; x++){
             butArray[x] = new JButton(String.valueOf(x + 1));
             butArray[x].addActionListener(this);
-            butArray[x].setSize(20,20);
+            butArray[x].setVisible(true);
+            butArray[x].setBounds(getRandomNumber(120,380),getRandomNumber(120,380),20,20);
             gamePanel.add(butArray[x]);
         }
+    }
+
+    public int getRandomNumber(int min, int max){
+        return (int) ((Math.random() *(max-min)) + min);
     }
 
 }

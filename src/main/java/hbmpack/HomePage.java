@@ -108,6 +108,7 @@ public class HomePage extends JFrame implements ActionListener {
         JLabel verbScore = new JLabel("Verbal Memory Score: " + current.getVerbScore());
         JLabel seqScore = new JLabel("Sequence Memory Score: " + current.getSeqScore());
         JLabel reactScore = new JLabel("Reaction Time Score: " + current.getReactScore() + "ms");
+        JLabel chimpScore = new JLabel("Chimp Score: " + current.getChimp());
         JTextField EnterName = new JTextField();
 
         CurrentName.setFont(new Font("Bold", Font.BOLD, 18));
@@ -121,6 +122,7 @@ public class HomePage extends JFrame implements ActionListener {
         verbScore.setBounds(5, 480, 200, 50);
         seqScore.setBounds(205, 500,200, 50);
         reactScore.setBounds(5,500,200,50);
+        chimpScore.setBounds(405,500,200,50);
 
         //implements an action listener to the textfield
         EnterName.addActionListener(e -> {
@@ -158,6 +160,7 @@ public class HomePage extends JFrame implements ActionListener {
         HomePage.add(verbScore);
         HomePage.add(seqScore);
         Homepage.add(reactScore);
+        Homepage.add(chimpScore);
     }
 
     /**********************************************************
@@ -218,6 +221,7 @@ public class HomePage extends JFrame implements ActionListener {
         private int NumbScore = 0;
         private int seqScore = 0;
         private int react = 0;
+        private int chimpScore = 0;
 
         public int getSeqScore() {
             return seqScore;
@@ -267,5 +271,9 @@ public class HomePage extends JFrame implements ActionListener {
         public void setReactScore(int reactScore){react = reactScore;}
 
         public int getReactScore(){return react;}
+
+        public void setChimp(int score){chimpScore = score;}
+
+        public int getChimp(){return chimpScore;}
     }
 }
