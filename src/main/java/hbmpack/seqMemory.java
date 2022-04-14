@@ -1,11 +1,11 @@
 package hbmpack;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.time.LocalTime;
-import javax.swing.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class seqMemory implements ActionListener{
     JFrame frame = new JFrame();
@@ -13,11 +13,21 @@ public class seqMemory implements ActionListener{
 
     JLabel title = new JLabel();
     JLabel subtitle = new JLabel();
-
+    JButton[] grid = new JButton[9];
+    JLabel scorelabel = new JLabel();
+    JLabel lifeLabel = new JLabel();
     JButton home_but;
     JButton start_game;
+    Queue<Integer> memoryq = new LinkedList<>();
+    Queue<Integer> tempmemoryq2;
+    int lives = 3;
+    int score = 0;
+    boolean running = false;
+    JButton clicked;
+
     seqMemory(HomePage.Profile current_profile){
         seqcurrent = current_profile;
+
 
         frame.setTitle("Sequence Memory"); // Sets Title
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Exit Application
@@ -61,16 +71,6 @@ public class seqMemory implements ActionListener{
         start_game.setVisible(true);
         frame.add(start_game);
     }
-    public void actionPerformed(ActionEvent e){
-        if (e.getSource()== home_but) {
-           frame.dispose();
-           new HomePage(seqcurrent);
-        }
-        if(e.getSource() == start_game){
-            cleartitlescreen();
-            creategrid();
-        }
-    }
 
     public void cleartitlescreen(){
         home_but.setVisible(false);
@@ -78,10 +78,147 @@ public class seqMemory implements ActionListener{
         title.setVisible(false);
         subtitle.setVisible(false);
     }
-    public void creategrid(){
-        JButton rOnecOne = new JButton();
-        rOnecOne.setBackground(Color.black);
-        rOnecOne.setBounds(100, 100, 100, 100);
-        frame.add(rOnecOne);
+    public void createscorelives(){
+
+        scorelabel.setHorizontalAlignment(SwingConstants.CENTER);
+        scorelabel.setBounds(150, 60, 125, 100);
+        scorelabel.setFont(new Font(null, Font.PLAIN, 25));
+        scorelabel.setText("Score: ");
+        scorelabel.setVisible(true);
+
+        lifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lifeLabel.setBounds(300, 60, 125, 100);
+        lifeLabel.setFont(new Font(null, Font.PLAIN, 25));
+        lifeLabel.setText("Lives: " + lives);
+        lifeLabel.setVisible(true);
+
+        frame.add(scorelabel);
+        frame.add(lifeLabel);
+    }
+    private void setscorelabel(int score){
+        scorelabel.setText("Score: " + score);
+
+    }
+    private void loselife(){
+        lives--;
+        lifeLabel.setText("Lives: " + lives);
+    }
+    protected void creategrid(){
+        for(int i =0; i<grid.length; i++) {
+            JButton gridpiece = new JButton();
+            gridpiece.addActionListener(this);
+            gridpiece.setBackground(Color.black);
+            grid[i] = gridpiece;
+            frame.add(grid[i]);
+        }
+        grid[0].setBounds(150, 150, 100, 100);
+        grid[1].setBounds(250, 150, 100, 100);
+        grid[2].setBounds(350, 150, 100, 100);
+        grid[3].setBounds(150, 250, 100, 100);
+        grid[4].setBounds(250, 250, 100, 100);
+        grid[5].setBounds(350, 250, 100, 100);
+        grid[6].setBounds(150, 350, 100, 100);
+        grid[7].setBounds(250, 350, 100, 100);
+        grid[8].setBounds(350, 350, 100, 100);
+
+    }
+
+    public void actionPerformed(ActionEvent e){
+        if (e.getSource()== home_but) {
+            frame.dispose();
+            new HomePage(seqcurrent);
+        }else if(e.getSource() == start_game){
+            cleartitlescreen();
+            creategrid();
+            createscorelives();
+            addtoseq();
+            showsequence();
+        }else{
+            clicked = (JButton) e.getSource();
+            if(!running) {
+                tempmemoryq2 = new LinkedList<>(memoryq);
+                running = true;
+            }
+            boolean add = false;
+            add = compareseq();
+            //if they got one wrong
+            if(!add){
+                //resets sequence and shows again
+                running = false;
+                showsequence();
+            }
+            //if they get them all right.
+            if(tempmemoryq2.size() == 0) {
+                if (add) {
+                    addtoseq();
+                }
+                running = false;
+                showsequence();
+            }
+        }
+    }
+
+    private boolean compareseq(){
+            if(clicked == grid[tempmemoryq2.peek()]){
+                tempmemoryq2.remove();
+                score++;
+                setscorelabel(score);
+                return true;
+            }else{
+                loselife();
+                return false;
+            }
+
+    }
+
+    private void showsequence(){
+        Queue<Integer> tempmemoryq = new LinkedList<>(memoryq);
+
+        //prevents the grid from being clicked while showing sequence
+        for(int i =0; i<grid.length; i++) {
+            grid[i].setEnabled(false);
+        }
+        //black out returns tiles to black 1 second after being blue
+        final int[] selectedtile = {tempmemoryq.peek()};
+            Timer blackout = new Timer(1000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    grid[selectedtile[0]].setBackground(Color.black);
+                    System.out.println("end");
+                    if(tempmemoryq.size() ==0){
+                        System.out.println("size is 0");
+                        for(int i =0; i<grid.length; i++) {
+                            grid[i].setEnabled(true);
+                        }
+                    }
+                }
+            });
+            //blue out turns the first tile in queue to blue
+            Timer blueout = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(tempmemoryq.size() == 0){
+                    ((Timer)e.getSource()).setRepeats(false);
+                    ((Timer)e.getSource()).stop();
+                    return;
+                }else {
+                    System.out.println("size is anything but zero");
+                    selectedtile[0] = tempmemoryq.remove();
+                    grid[selectedtile[0]].setBackground(Color.blue);
+                    blackout.start();
+                }
+                }
+            });
+            //allow blueout to be repeated for the entire queue
+            blueout.setRepeats(true);
+            //blackout should only occur once, after each blueout
+            blackout.setRepeats(false);
+            //begins the color sequence
+            blueout.start();
+        }
+
+    private void addtoseq(){
+        int temp = (int)(Math.random()*9);
+        memoryq.add(temp);
     }
 }
