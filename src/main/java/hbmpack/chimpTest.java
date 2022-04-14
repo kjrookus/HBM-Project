@@ -78,7 +78,7 @@ public class chimpTest extends JFrame implements ActionListener {
                 butArray[r].setVisible(false);
                 scoreTracker++;
                 for(int x = 0; x < size; x++){
-                    //butArray[x].setForeground(Color.white);
+                    butArray[x].setForeground(Color.white);
                     butArray[x].setBackground(Color.gray);
                 }
                 if(e.getSource() == butArray[size-1]){
