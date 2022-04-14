@@ -14,7 +14,7 @@ public class reactionTime extends JFrame implements ActionListener {
     JButton redBut = new JButton();
     JPanel panel = new JPanel();
     Timer delay;
-    JLabel results = new JLabel("",SwingConstants.CENTER);
+    JLabel results = new JLabel();
 
     int elapsedTime;
     boolean test;
@@ -92,6 +92,7 @@ public class reactionTime extends JFrame implements ActionListener {
                 start.setText("Try Again");
                 start.setVisible(true);
                 home_but.setVisible(true);
+                results.setBounds(100,200,600,100);
                 results.setText("Too Soon! Press Try Again to restart!");
             }
             if (test) {
@@ -102,6 +103,7 @@ public class reactionTime extends JFrame implements ActionListener {
                 start.setVisible(true);
                 home_but.setVisible(true);
                 reactCurrent.setReactScore(elapsedTime);
+                results.setBounds(240,200,600,100);
                 results.setText("Time: " + elapsedTime + "ms");
             }
         }

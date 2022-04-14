@@ -78,7 +78,7 @@ public class chimpTest extends JFrame implements ActionListener {
                 butArray[r].setVisible(false);
                 scoreTracker++;
                 for(int x = 0; x < size; x++){
-                    butArray[x].setForeground(Color.white);
+                    //butArray[x].setForeground(Color.white);
                     butArray[x].setBackground(Color.gray);
                 }
                 if(e.getSource() == butArray[size-1]){
@@ -104,17 +104,28 @@ public class chimpTest extends JFrame implements ActionListener {
     }
 
     private void initialize(int size){
-        for(int x = 0; x < size; x++){
-            butArray[x] = new JButton(String.valueOf(x + 1));
-            butArray[x].addActionListener(this);
-            butArray[x].setVisible(true);
-            butArray[x].setBounds(getRandomNumber(120,380),getRandomNumber(120,380),20,20);
-            gamePanel.add(butArray[x]);
+        for(int z = 0; z < size; z++){
+            boolean done = false;
+            butArray[z] = new JButton(String.valueOf(z + 1));
+            butArray[z].addActionListener(this);
+            butArray[z].setVisible(true);
+            butArray[z].setFocusable(false);
+            butArray[z].setFont(new Font(null,Font.PLAIN,15));
+            butArray[z].setBounds(getRandomNumber(0,350),getRandomNumber(0,350),50,50);
+            while(!done){
+                for(int x = 0; x < z; x++){
+                    if(butArray[x].getBounds().intersects(butArray[z].getBounds())){
+                        butArray[z].setBounds(getRandomNumber(0,350),getRandomNumber(0,350),50,50);
+                        x = -1;
+                    }
+                }
+                done = true;
+            }
+            gamePanel.add(butArray[z]);
         }
     }
 
     public int getRandomNumber(int min, int max){
         return (int) ((Math.random() *(max-min)) + min);
     }
-
 }
