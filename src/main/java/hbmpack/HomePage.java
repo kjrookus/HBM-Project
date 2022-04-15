@@ -204,7 +204,7 @@ public class HomePage extends JFrame implements ActionListener {
             new reactionTime(current);
             HomePage.dispose();
         }else if(e.getSource() == sequence_mem_but){
-            new seqMemory(current);
+            new SeqMemory(current);
             HomePage.dispose();
         }else if(e.getSource()==chimpTestBut){
             new chimpTest(current);

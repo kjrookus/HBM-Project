@@ -1,13 +1,28 @@
 package hbmpack;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.Queue;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
-public class seqMemory implements ActionListener{
+/******************************************************
+ * Creates a 3x3 grid for sequence memory, which lights up
+ * buttons at random for the player to memorize and repeat
+ * back to the player. Player earns one point per correct
+ * button, and loses a life upon an incorrect button
+ *
+ * @author Kaden Rookus & Alex Bergers
+ * @version
+ *
+ *******************************************************/
+public class SeqMemory implements ActionListener {
     JFrame frame = new JFrame();
     private HomePage.Profile seqcurrent;
 
@@ -16,8 +31,8 @@ public class seqMemory implements ActionListener{
     JButton[] grid = new JButton[9];
     JLabel scorelabel = new JLabel();
     JLabel lifeLabel = new JLabel();
-    JButton home_but;
-    JButton start_game;
+    JButton homebut;
+    JButton startgame;
     Queue<Integer> memoryq = new LinkedList<>();
     Queue<Integer> tempmemoryq2;
     int lives = 3;
@@ -25,8 +40,8 @@ public class seqMemory implements ActionListener{
     boolean running = false;
     JButton clicked;
 
-    seqMemory(HomePage.Profile current_profile){
-        seqcurrent = current_profile;
+    SeqMemory(HomePage.Profile currentprofile) {
+        seqcurrent = currentprofile;
 
 
         frame.setTitle("Sequence Memory"); // Sets Title
@@ -39,7 +54,7 @@ public class seqMemory implements ActionListener{
         setButtons();
     }
 
-    private void gameinstructions(){
+    private void gameinstructions() {
         title.setText("Sequence Memory Test");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setBounds(0, 100, 600, 100);
@@ -54,32 +69,45 @@ public class seqMemory implements ActionListener{
         frame.add(title);
         frame.add(subtitle);
     }
-    public final void setButtons() {
 
+    /**************************************************
+    * Set Buttons is a method that initializes the buttons
+    * in an organized area to allow easy changing of
+    * bounds, text, and actionlisteners.
+     *************************************************/
+    public final void setButtons() {
         //home button
-        home_but = new JButton();
-        frame.add(home_but);
-        home_but.setBounds(225, 475, 150, 50);// sets location and size of button
-        home_but.setFocusable(false);
-        home_but.setText("Return to Menu");
-        home_but.addActionListener(this);
+        homebut = new JButton();
+        frame.add(homebut);
+        homebut.setBounds(225, 475, 150, 50); // sets location and size of button
+        homebut.setFocusable(false);
+        homebut.setText("Return to Menu");
+        homebut.addActionListener(this);
 
         // start button begins game
-        start_game = new JButton("start");
-        start_game.setBounds(225, 350, 150, 50);
-        start_game.addActionListener(this);
-        start_game.setVisible(true);
-        frame.add(start_game);
+        startgame = new JButton("start");
+        startgame.setBounds(225, 350, 150, 50);
+        startgame.addActionListener(this);
+        startgame.setVisible(true);
+        frame.add(startgame);
     }
 
-    public void cleartitlescreen(){
-        home_but.setVisible(false);
-        start_game.setVisible(false);
+    /***********************************************
+     * Clear title screen sets all the introduction
+     * titles and buttons to invisible.
+     **********************************************/
+    public void cleartitlescreen() {
+        homebut.setVisible(false);
+        startgame.setVisible(false);
         title.setVisible(false);
         subtitle.setVisible(false);
     }
-    public void createscorelives(){
+    /***********************************************
+     * Sets up the Score and Lives labels to appear
+     * after the title screen is closed.
+     **********************************************/
 
+    public void createscorelives() {
         scorelabel.setHorizontalAlignment(SwingConstants.CENTER);
         scorelabel.setBounds(150, 60, 125, 100);
         scorelabel.setFont(new Font(null, Font.PLAIN, 25));
@@ -95,16 +123,31 @@ public class seqMemory implements ActionListener{
         frame.add(scorelabel);
         frame.add(lifeLabel);
     }
-    private void setscorelabel(int score){
-        scorelabel.setText("Score: " + score);
 
+    /************************************************
+     * setter for the score label
+     * @param score score for the label to be set to.
+     *************************************************/
+    private void setscorelabel(int score) {
+        scorelabel.setText("Score: " + score);
     }
-    private void loselife(){
+
+    /**************************************
+     * private method that subtracts a life
+     * and updates the appropriate label.
+     **************************************/
+    private void loselife() {
         lives--;
         lifeLabel.setText("Lives: " + lives);
     }
-    protected void creategrid(){
-        for(int i =0; i<grid.length; i++) {
+
+    /*********************************************
+     * create grid is a protected method that will
+     * always generate a 3x3 grid to be used for
+     * the sequence memory.
+     *********************************************/
+    protected void creategrid() {
+        for (int i = 0; i < grid.length; i++) {
             JButton gridpiece = new JButton();
             gridpiece.addActionListener(this);
             gridpiece.setBackground(Color.black);
@@ -123,32 +166,39 @@ public class seqMemory implements ActionListener{
 
     }
 
-    public void actionPerformed(ActionEvent e){
-        if (e.getSource()== home_but) {
+    /**************************************************************
+     * actionPerformed sets up the action listeners for the buttons
+     * this includes the home button, start game button, and all 9
+     * buttons in the sequence grid.
+     *
+     * @param e takes in the object sending an ActionEvent.
+     *************************************************************/
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == homebut) {
             frame.dispose();
             new HomePage(seqcurrent);
-        }else if(e.getSource() == start_game){
+        } else if (e.getSource() == startgame) {
             cleartitlescreen();
             creategrid();
             createscorelives();
             addtoseq();
             showsequence();
-        }else{
+        } else {
             clicked = (JButton) e.getSource();
-            if(!running) {
+            if (!running) {
                 tempmemoryq2 = new LinkedList<>(memoryq);
                 running = true;
             }
             boolean add = false;
             add = compareseq();
             //if they got one wrong
-            if(!add){
+            if (!add){
                 //resets sequence and shows again
                 running = false;
                 showsequence();
             }
             //if they get them all right.
-            if(tempmemoryq2.size() == 0) {
+            if (tempmemoryq2.size() == 0) {
                 if (add) {
                     addtoseq();
                 }
@@ -158,24 +208,37 @@ public class seqMemory implements ActionListener{
         }
     }
 
-    private boolean compareseq(){
-            if(clicked == grid[tempmemoryq2.peek()]){
+    /**********************************************************************
+     * compareseq() is a private method used by the action listener
+     * to determine whether the correct button was hit, and appropriately
+     * adjusts the score and lives based on the button hit.
+     *
+     * @return returns true if the correct button is hit, false otherwise.
+     *********************************************************************/
+    private boolean compareseq() {
+            if (clicked == grid[tempmemoryq2.peek()]) {
                 tempmemoryq2.remove();
                 score++;
                 setscorelabel(score);
                 return true;
-            }else{
+            } else {
                 loselife();
                 return false;
             }
 
     }
 
-    private void showsequence(){
+    /***************************************************************
+     * showsequence is a method that iterates through the current
+     * sequence queue and blinks the resepctive square to blue. This
+     * is done for one second, every 2 seconds and repeats until
+     * the sequence is empty.
+     ****************************************************************/
+    private void showsequence() {
         Queue<Integer> tempmemoryq = new LinkedList<>(memoryq);
 
         //prevents the grid from being clicked while showing sequence
-        for(int i =0; i<grid.length; i++) {
+        for (int i = 0; i < grid.length; i++) {
             grid[i].setEnabled(false);
         }
         //black out returns tiles to black 1 second after being blue
@@ -185,9 +248,9 @@ public class seqMemory implements ActionListener{
                 public void actionPerformed(ActionEvent e) {
                     grid[selectedtile[0]].setBackground(Color.black);
                     System.out.println("end");
-                    if(tempmemoryq.size() ==0){
+                    if (tempmemoryq.size() == 0) {
                         System.out.println("size is 0");
-                        for(int i =0; i<grid.length; i++) {
+                        for (int i = 0; i < grid.length; i++) {
                             grid[i].setEnabled(true);
                         }
                     }
@@ -197,11 +260,11 @@ public class seqMemory implements ActionListener{
             Timer blueout = new Timer(2000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(tempmemoryq.size() == 0){
-                    ((Timer)e.getSource()).setRepeats(false);
-                    ((Timer)e.getSource()).stop();
+                if (tempmemoryq.size() == 0) {
+                    ((Timer) e.getSource()).setRepeats(false);
+                    ((Timer) e.getSource()).stop();
                     return;
-                }else {
+                } else {
                     System.out.println("size is anything but zero");
                     selectedtile[0] = tempmemoryq.remove();
                     grid[selectedtile[0]].setBackground(Color.blue);
@@ -217,8 +280,13 @@ public class seqMemory implements ActionListener{
             blueout.start();
         }
 
-    private void addtoseq(){
-        int temp = (int)(Math.random()*9);
+    /*******************************************
+     * addtoseq generates a random number 0-8
+     * and adds it to the queue that represents
+     * the current sequence.
+     ******************************************/
+    private void addtoseq() {
+        int temp = (int) (Math.random() * 9);
         memoryq.add(temp);
     }
 }
