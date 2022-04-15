@@ -6,14 +6,14 @@ import java.awt.event.*;
 
 public class reactionTime extends JFrame implements ActionListener {
     static JFrame reactionTime = new JFrame();
-    JLabel title = new JLabel();
+    JLabel title = new JLabel(); // explain rules to user
     JLabel subtitle = new JLabel();
-    JLabel click = new JLabel();
+    JLabel click = new JLabel(); // tells player what to do
     JButton start = new JButton("Start");
-    JButton home_but = new JButton();
-    JButton redBut = new JButton();
-    JPanel panel = new JPanel();
-    Timer delay;
+    JButton home_but = new JButton(); // returns home
+    JButton redBut = new JButton(); // test is giant button that goes from red to green
+    JPanel panel = new JPanel(); // panel made to add button to
+    Timer delay; // time tracker
     JLabel results = new JLabel();
 
     int elapsedTime;
@@ -23,7 +23,7 @@ public class reactionTime extends JFrame implements ActionListener {
 
     public reactionTime(HomePage.Profile current) {
 
-        reactCurrent = current;
+        reactCurrent = current; // profile
 
         this.setTitle("Reaction Time"); // Sets Title
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Exit Application

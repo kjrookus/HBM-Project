@@ -41,9 +41,8 @@ public class chimpTest extends JFrame implements ActionListener {
         subtitle.setVisible(true);
         this.add(subtitle);
 
-        finalScore.setBounds(0,200,600,100);
-        finalScore.setFont(new Font(null,Font.PLAIN,20));
-        finalScore.setVisible(false);
+        finalScore.setBounds(248,200,200,100);
+        finalScore.setFont(new Font(null,Font.PLAIN,32));
         this.add(finalScore);
 
         start.setHorizontalAlignment(SwingConstants.CENTER);
@@ -87,17 +86,34 @@ public class chimpTest extends JFrame implements ActionListener {
                     scoreTracker =0;
                     gamePanel.repaint();
                     initialize(size);
-                    chimpCurrent.setChimp(size);
                 }
             }
             else if(e.getSource()==butArray[r] && r != scoreTracker){
-                gamePanel.setVisible(false);}
+                gamePanel.repaint();
+                gamePanel.revalidate();
+                gamePanel.removeAll();
+                gamePanel.setVisible(false);
+                start.setVisible(true);
+                finalScore.setVisible(true);
+                if(size == 4){size = 0;}
+                else{size = size -1;}
+                finalScore.setText("Score: "+size);
+                if(size> chimpCurrent.getChimp()){
+                    chimpCurrent.setChimp(size);
+                }
+            }
         }
     }
 
 
     private void theGame(){
+        gamePanel.repaint();
+        gamePanel.revalidate();
+        gamePanel.removeAll();
+        size = 4;
+        scoreTracker = 0;
         start.setVisible(false);
+        finalScore.setVisible(false);
         title.setVisible(false);
         subtitle.setVisible(false);
         gamePanel.setVisible(true);
