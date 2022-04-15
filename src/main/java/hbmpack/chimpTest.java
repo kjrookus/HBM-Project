@@ -5,6 +5,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**************************************************
+ * Opens GUI that starts the chimp test game.
+ * The user must memorize the position of the buttons
+ * in order of 1 - whichever level they are on, beginning
+ * with 4. Each successful attempt brings the user to the
+ * next level. Upon failure the score is shown and the user
+ * may start over.
+ * @author Kaden Rookus & Alex Bergers
+ * @version
+ **************************************************/
+
 public class chimpTest extends JFrame implements ActionListener {
     JFrame chimpTest = new JFrame();
     JLabel title = new JLabel();
@@ -13,8 +24,8 @@ public class chimpTest extends JFrame implements ActionListener {
     JButton home_but = new JButton();
     JPanel gamePanel = new JPanel();
     JLabel finalScore = new JLabel();
-    int size = 4;
-    int scoreTracker = 0;
+    int size;
+    int scoreTracker;
     JButton[]butArray = new JButton[100];
 
     HomePage.Profile chimpCurrent;
@@ -64,6 +75,16 @@ public class chimpTest extends JFrame implements ActionListener {
         gamePanel.setLayout(null);
         this.add(gamePanel);
     }
+
+    /******************************************************
+     * Action listener for each button added to the GUI
+     * The start button begins the game and disables all
+     * instances of rules shown to the user.
+     * the return home button brings the user to the homepage
+     * and removes the current page.
+     * the for loop, goes through the array of buttons used for the
+     * game, making sure the buttons are clicked in order.
+     *******************************************************/
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == home_but) {
             new HomePage(chimpCurrent);
@@ -76,28 +97,33 @@ public class chimpTest extends JFrame implements ActionListener {
             if(e.getSource() == butArray[r] &&  r == scoreTracker){
                 butArray[r].setVisible(false);
                 scoreTracker++;
-                for(int x = 0; x < size; x++){
-                    butArray[x].setText("");
-                    butArray[x].setForeground(Color.white);
-                    butArray[x].setBackground(Color.white);
+                if (size > 4) {
+                    for (int x = 0; x < size; x++) {
+                        butArray[x].setText("");
+                        butArray[x].setForeground(Color.white);
+                        butArray[x].setBackground(Color.white);
+                    }
                 }
+                // test if the last button in the sequence is pressed and start the next round
                 if(e.getSource() == butArray[size-1]){
+                    // adds 1 to the size. size = level
                     size = size + 1;
                     scoreTracker =0;
                     gamePanel.repaint();
                     initialize(size);
                 }
             }
+            // if wrong button is clicked end the game and display scores and play again button
             else if(e.getSource()==butArray[r] && r != scoreTracker){
-                gamePanel.repaint();
-                gamePanel.revalidate();
-                gamePanel.removeAll();
                 gamePanel.setVisible(false);
                 start.setVisible(true);
                 finalScore.setVisible(true);
+                // if size = 4, user failed to complete any test
                 if(size == 4){size = 0;}
                 else{size = size -1;}
+                // display the score to user
                 finalScore.setText("Score: "+size);
+                // check to see if high score for user is beaten
                 if(size> chimpCurrent.getChimp()){
                     chimpCurrent.setChimp(size);
                 }
@@ -105,8 +131,14 @@ public class chimpTest extends JFrame implements ActionListener {
         }
     }
 
-
+    /****************************************
+     * begins the process of the actual game.
+     * removes any unneeded buttons and labels
+     * clears the board from any previous games.
+     * initializes the buttons to begin appearing
+     ****************************************/
     private void theGame(){
+        // clear the game panel and reset variables
         gamePanel.repaint();
         gamePanel.revalidate();
         gamePanel.removeAll();
@@ -121,14 +153,18 @@ public class chimpTest extends JFrame implements ActionListener {
     }
 
     private void initialize(int size){
+        // loop through the array to create buttons and set locations
         for(int z = 0; z < size; z++){
-            boolean done = false;
+
             butArray[z] = new JButton(String.valueOf(z + 1));
             butArray[z].addActionListener(this);
             butArray[z].setVisible(true);
             butArray[z].setFocusable(false);
             butArray[z].setFont(new Font(null,Font.PLAIN,15));
             butArray[z].setBounds(getRandomNumber(0,350),getRandomNumber(0,350),50,50);
+            // check to see if the position of the new button overlaps any buttons already in existence
+            // use boolean done to represent that all buttons have their own boundaries
+            boolean done = false;
             while(!done){
                 for(int x = 0; x < z; x++){
                     if(butArray[x].getBounds().intersects(butArray[z].getBounds())){
@@ -141,7 +177,7 @@ public class chimpTest extends JFrame implements ActionListener {
             gamePanel.add(butArray[z]);
         }
     }
-
+    // generate a random number in the bounds of the game panel for the location of the button
     public int getRandomNumber(int min, int max){
         return (int) ((Math.random() *(max-min)) + min);
     }
