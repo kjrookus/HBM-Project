@@ -31,6 +31,8 @@ public class SeqMemory implements ActionListener {
     JButton[] grid = new JButton[9];
     JLabel scorelabel = new JLabel();
     JLabel lifeLabel = new JLabel();
+    JLabel loselabel = new JLabel();
+    JLabel loselabel2 = new JLabel();
     JButton homebut;
     JButton startgame;
     Queue<Integer> memoryq = new LinkedList<>();
@@ -39,6 +41,7 @@ public class SeqMemory implements ActionListener {
     int score = 0;
     boolean running = false;
     JButton clicked;
+    JButton tryagainbut;
 
     SeqMemory(HomePage.Profile currentprofile) {
         seqcurrent = currentprofile;
@@ -111,7 +114,7 @@ public class SeqMemory implements ActionListener {
         scorelabel.setHorizontalAlignment(SwingConstants.CENTER);
         scorelabel.setBounds(150, 60, 125, 100);
         scorelabel.setFont(new Font(null, Font.PLAIN, 25));
-        scorelabel.setText("Score: ");
+        scorelabel.setText("Score: " + score);
         scorelabel.setVisible(true);
 
         lifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -125,7 +128,8 @@ public class SeqMemory implements ActionListener {
     }
 
     /************************************************
-     * setter for the score label
+     * setter for the score label.
+     *
      * @param score score for the label to be set to.
      *************************************************/
     private void setscorelabel(int score) {
@@ -139,6 +143,33 @@ public class SeqMemory implements ActionListener {
     private void loselife() {
         lives--;
         lifeLabel.setText("Lives: " + lives);
+        if (lives == 0) {
+            for (int i = 0; i < grid.length; i++) {
+                grid[i].setVisible(false);
+            }
+            tryagainbut = new JButton("Try Again?");
+            tryagainbut.setBounds(225, 425, 150, 50);
+            tryagainbut.addActionListener(this);
+            tryagainbut.setVisible(true);
+            frame.add(tryagainbut);
+
+            loselabel.setText("Sorry, You Lose.");
+            loselabel.setBounds(100, 250, 400, 50);
+            loselabel.setHorizontalAlignment(SwingConstants.CENTER);
+            loselabel.setVisible(true);
+            loselabel.setFont(new Font(null, Font.PLAIN, 25));
+
+            loselabel2.setText("Final Score: " + score);
+            loselabel2.setBounds(100, 300, 400, 50);
+            loselabel2.setHorizontalAlignment(SwingConstants.CENTER);
+            loselabel2.setVisible(true);
+            loselabel2.setFont(new Font(null, Font.PLAIN, 25));
+
+            frame.add(loselabel2);
+            frame.add(loselabel);
+
+            homebut.setVisible(true);
+        }
     }
 
     /*********************************************

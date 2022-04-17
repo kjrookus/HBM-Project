@@ -123,7 +123,6 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
         tryagain_but.addActionListener(this);
         tryagain_but.setVisible(false);
         VerbMemory.add(tryagain_but);
-
     }
     public void actionPerformed(ActionEvent e){
         if (e.getSource()== home_but) {
