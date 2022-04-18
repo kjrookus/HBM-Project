@@ -153,7 +153,9 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
             }
         }
         if(e.getSource() == tryagain_but){
-            verbcurrent.setVerbScore(VerbMemoryBack.score);
+            if(verbcurrent.getVerbScore() < VerbMemoryBack.score) {
+                verbcurrent.setVerbScore(VerbMemoryBack.score);
+            }
             VerbMemory.dispose();
             new VerbMemoryFront(verbcurrent);
         }

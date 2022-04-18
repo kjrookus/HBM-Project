@@ -206,6 +206,9 @@ public class SeqMemory implements ActionListener {
      *************************************************************/
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == homebut) {
+            if(seqcurrent.getSeqScore() < score) {
+                seqcurrent.setSeqScore(score);
+            }
             frame.dispose();
             new HomePage(seqcurrent);
         } else if (e.getSource() == startgame) {
@@ -214,6 +217,12 @@ public class SeqMemory implements ActionListener {
             createscorelives();
             addtoseq();
             showsequence();
+        }else if (e.getSource() == tryagainbut) {
+            if(seqcurrent.getSeqScore() < score) {
+                seqcurrent.setSeqScore(score);
+            }
+            frame.dispose();
+            new SeqMemory(seqcurrent);
         } else {
             clicked = (JButton) e.getSource();
             if (!running) {

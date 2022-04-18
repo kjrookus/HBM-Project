@@ -97,7 +97,7 @@ public class chimpTest extends JFrame implements ActionListener {
             if(e.getSource() == butArray[r] &&  r == scoreTracker){
                 butArray[r].setVisible(false);
                 scoreTracker++;
-                if (size > 4) {
+                if (size >= 4) {
                     for (int x = 0; x < size; x++) {
                         butArray[x].setText("");
                         butArray[x].setForeground(Color.white);
