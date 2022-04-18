@@ -12,7 +12,7 @@ import java.awt.event.*;
  * Upon pressing the display will give the time and the option
  * to play again or return to homepage.
  * @author Kaden Rookus & Alex Bergers
- * @version
+ * @version 2
  *************************************************************/
 public class reactionTime extends JFrame implements ActionListener {
 
@@ -102,7 +102,7 @@ public class reactionTime extends JFrame implements ActionListener {
      * Delay is the amount of time that has past set by the
      * random amount of time given. If that amount of time has
      * past, the redBut turns green and the test is now true.
-     * @param e
+     * @param e actionlistener input.
      **************************************************/
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == home_but) {

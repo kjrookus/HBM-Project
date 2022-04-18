@@ -19,12 +19,12 @@ import javax.swing.Timer;
  * button, and loses a life upon an incorrect button
  *
  * @author Kaden Rookus & Alex Bergers
- * @version
+ * @version 2
  *
  *******************************************************/
 public class SeqMemory implements ActionListener {
     JFrame frame = new JFrame();
-    private HomePage.Profile seqcurrent;
+    private final HomePage.Profile seqcurrent;
 
     JLabel title = new JLabel();
     JLabel subtitle = new JLabel();
@@ -144,8 +144,8 @@ public class SeqMemory implements ActionListener {
         lives--;
         lifeLabel.setText("Lives: " + lives);
         if (lives == 0) {
-            for (int i = 0; i < grid.length; i++) {
-                grid[i].setVisible(false);
+            for (JButton jButton : grid) {
+                jButton.setVisible(false);
             }
             tryagainbut = new JButton("Try Again?");
             tryagainbut.setBounds(225, 425, 150, 50);
@@ -229,7 +229,7 @@ public class SeqMemory implements ActionListener {
                 tempmemoryq2 = new LinkedList<>(memoryq);
                 running = true;
             }
-            boolean add = false;
+            boolean add;
             add = compareseq();
             //if they got one wrong
             if (!add){
@@ -255,6 +255,7 @@ public class SeqMemory implements ActionListener {
      *
      * @return returns true if the correct button is hit, false otherwise.
      *********************************************************************/
+    @SuppressWarnings("ConstantConditions")
     private boolean compareseq() {
             if (clicked == grid[tempmemoryq2.peek()]) {
                 tempmemoryq2.remove();
@@ -278,40 +279,31 @@ public class SeqMemory implements ActionListener {
         Queue<Integer> tempmemoryq = new LinkedList<>(memoryq);
 
         //prevents the grid from being clicked while showing sequence
-        for (int i = 0; i < grid.length; i++) {
-            grid[i].setEnabled(false);
+        for (JButton jButton : grid) {
+            jButton.setEnabled(false);
         }
         //black out returns tiles to black 1 second after being blue
+        //noinspection ConstantConditions
         final int[] selectedtile = {tempmemoryq.peek()};
-            Timer blackout = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    grid[selectedtile[0]].setBackground(Color.black);
-                    System.out.println("end");
-                    if (tempmemoryq.size() == 0) {
-                        System.out.println("size is 0");
-                        for (int i = 0; i < grid.length; i++) {
-                            grid[i].setEnabled(true);
-                        }
+            Timer blackout = new Timer(1000, e -> {
+                grid[selectedtile[0]].setBackground(Color.black);
+                if (tempmemoryq.size() == 0) {
+                    for (JButton jButton : grid) {
+                        jButton.setEnabled(true);
                     }
                 }
             });
             //blue out turns the first tile in queue to blue
-            Timer blueout = new Timer(2000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            Timer blueout = new Timer(2000, e -> {
                 if (tempmemoryq.size() == 0) {
                     ((Timer) e.getSource()).setRepeats(false);
                     ((Timer) e.getSource()).stop();
-                    return;
                 } else {
-                    System.out.println("size is anything but zero");
                     selectedtile[0] = tempmemoryq.remove();
                     grid[selectedtile[0]].setBackground(Color.blue);
                     blackout.start();
                 }
-                }
-            });
+                });
             //allow blueout to be repeated for the entire queue
             blueout.setRepeats(true);
             //blackout should only occur once, after each blueout

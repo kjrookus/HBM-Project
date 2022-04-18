@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  * next level. Upon failure the score is shown and the user
  * may start over.
  * @author Kaden Rookus & Alex Bergers
- * @version
+ * @version 2
  **************************************************/
 
 public class chimpTest extends JFrame implements ActionListener {

@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import com.github.dhiraj072.randomwordgenerator.RandomWordGenerator;
 
 public class VerbMemoryFront extends JFrame implements ActionListener {
     JFrame VerbMemory = new JFrame();
@@ -167,10 +166,8 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
     }
 
     boolean gamerunning = false;
-    String goalWord;
     String[] checked = new String[100];
     public static int count = 0;
-    public boolean wordSeen = false;
 
     public final void frontGame(){
         gamerunning = true;
