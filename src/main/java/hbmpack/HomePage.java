@@ -147,7 +147,7 @@ public class HomePage extends JFrame implements ActionListener {
             NumScore.setText("Number Memory Score: " + current.getNumbScore());
             verbScore.setText("Verbal Memory Score: " + current.getVerbScore());
             seqScore.setText("Sequence Memory Score: " + current.getSeqScore());
-            reactScore.setText("Reaction time Score: " + current.getReactScore() + "ms");
+            reactScore.setText("Reaction Time Score: " + current.getReactScore() + "ms");
             UserDatabase.setUserbase(userbase);
             UserDatabase.setUsercount(usercount);
         });
@@ -159,8 +159,8 @@ public class HomePage extends JFrame implements ActionListener {
         HomePage.add(NumScore);
         HomePage.add(verbScore);
         HomePage.add(seqScore);
-        Homepage.add(reactScore);
-        Homepage.add(chimpScore);
+        HomePage.add(reactScore);
+        HomePage.add(chimpScore);
     }
 
     /**********************************************************

@@ -88,7 +88,7 @@ public class reactionTime extends JFrame implements ActionListener {
     }
     // keeps track of time passed since the start of the game
     // goes up by 1 ms for every 1ms passed
-    Timer timer = new Timer(1, e -> elapsedTime+=1);
+    Timer timer = new Timer(1, e -> elapsedTime+=10);
 
     /**************************************************
      * Action listener for various buttons in the game.
@@ -107,7 +107,7 @@ public class reactionTime extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == home_but) {
             new HomePage(reactCurrent);
-            reactionTime.dispose();
+            this.dispose();
         }
         if (e.getSource() == start){
             theGame();
@@ -135,7 +135,7 @@ public class reactionTime extends JFrame implements ActionListener {
                 results.setBounds(240,200,600,100);
                 results.setText("Time: " + elapsedTime + "ms");
                 // set new high score if previous score is higher than new one
-                if(elapsedTime < reactCurrent.getReactScore()){
+                if(elapsedTime < reactCurrent.getReactScore() || reactCurrent.getReactScore() == 0){
                     reactCurrent.setReactScore(elapsedTime);
                 }
             }

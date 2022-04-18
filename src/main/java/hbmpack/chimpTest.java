@@ -87,8 +87,8 @@ public class chimpTest extends JFrame implements ActionListener {
      *******************************************************/
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == home_but) {
+            this.dispose();
             new HomePage(chimpCurrent);
-            chimpTest.dispose();
         }
         if (e.getSource() == start){
             theGame();
