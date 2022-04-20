@@ -23,25 +23,25 @@ import javax.swing.Timer;
  *
  *******************************************************/
 public class SeqMemory implements ActionListener {
-    JFrame frame = new JFrame();
+    private final JFrame frame = new JFrame();
     private final HomePage.Profile seqcurrent;
 
-    JLabel title = new JLabel();
-    JLabel subtitle = new JLabel();
-    JButton[] grid = new JButton[9];
-    JLabel scorelabel = new JLabel();
-    JLabel lifeLabel = new JLabel();
-    JLabel loselabel = new JLabel();
-    JLabel loselabel2 = new JLabel();
-    JButton homebut;
-    JButton startgame;
-    Queue<Integer> memoryq = new LinkedList<>();
-    Queue<Integer> tempmemoryq2;
-    int lives = 3;
-    int score = 0;
-    boolean running = false;
-    JButton clicked;
-    JButton tryagainbut;
+    private final JLabel title = new JLabel();
+    private final JLabel subtitle = new JLabel();
+    private final JButton[] grid = new JButton[9];
+    private final JLabel scorelabel = new JLabel();
+    private final JLabel lifeLabel = new JLabel();
+    private final JLabel loselabel = new JLabel();
+    private final JLabel loselabel2 = new JLabel();
+    private JButton homebut;
+    private JButton startgame;
+    private final Queue<Integer> memoryq = new LinkedList<>();
+    private Queue<Integer> tempmemoryq2;
+    private int lives = 3;
+    private int score = 0;
+    private boolean running = false;
+    private JButton clicked;
+    private JButton tryagainbut;
 
     SeqMemory(HomePage.Profile currentprofile) {
         seqcurrent = currentprofile;
@@ -130,10 +130,10 @@ public class SeqMemory implements ActionListener {
     /************************************************
      * setter for the score label.
      *
-     * @param score score for the label to be set to.
+     * @param newscore score for the label to be set to.
      *************************************************/
-    private void setscorelabel(int score) {
-        scorelabel.setText("Score: " + score);
+    private void setscorelabel(int newscore) {
+        scorelabel.setText("Score: " + newscore);
     }
 
     /**************************************

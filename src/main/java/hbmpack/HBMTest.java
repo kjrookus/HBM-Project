@@ -15,7 +15,7 @@ public class HBMTest {
     public void testusercount() {
         HomePage.Profile current = new HomePage.Profile("None");
         HomePage s1 = new HomePage(current);
-        Assertions.assertEquals(s1.usercount, 0);
+        Assertions.assertEquals(s1.getUsercount(), 0);
     }
 
     @Test
@@ -24,7 +24,7 @@ public class HBMTest {
         HomePage s2 = new HomePage(temp);
         for (int i = 1; i < 100; i++) {
             s2.insert(temp);
-            Assertions.assertEquals(s2.usercount, i);
+            Assertions.assertEquals(s2.getUsercount(), i);
         }
     }
 
@@ -34,19 +34,10 @@ public class HBMTest {
         HomePage s1 = new HomePage(current);
         HomePage.Profile temp = new HomePage.Profile("Kaden Rookus");
         s1.insert(temp);
-        Assertions.assertEquals(s1.userbase[0].getName(), "Kaden Rookus");
-        Assertions.assertEquals(s1.userbase[0].getWpmScore(), 0);
-        Assertions.assertEquals(s1.userbase[0].getNumbScore(), 0);
-        Assertions.assertEquals(s1.userbase[0].getVerbScore(), 0);
-    }
-
-    @Test
-    public void testJbutton(){
-        HomePage.Profile current = new HomePage.Profile("None");
-        HomePage test = new HomePage(current);
-        Assertions.assertDoesNotThrow(() -> test.verb_mem_but.doClick());
-        Assertions.assertDoesNotThrow(() -> test.num_mem_but.doClick());
-        Assertions.assertDoesNotThrow(() -> test.type_speed_but.doClick());
+        Assertions.assertEquals(s1.getUserbase()[0].getName(), "Kaden Rookus");
+        Assertions.assertEquals(s1.getUserbase()[0].getWpmScore(), 0);
+        Assertions.assertEquals(s1.getUserbase()[0].getNumbScore(), 0);
+        Assertions.assertEquals(s1.getUserbase()[0].getVerbScore(), 0);
     }
 
     @Test
@@ -63,4 +54,5 @@ public class HBMTest {
         Assertions.assertEquals(value, 1);
 
     }
+
 }

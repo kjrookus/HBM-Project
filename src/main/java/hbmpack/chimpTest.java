@@ -1,9 +1,15 @@
 package hbmpack;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 
 /**************************************************
  * Opens GUI that starts the chimp test game.
@@ -17,18 +23,17 @@ import java.awt.event.ActionListener;
  **************************************************/
 
 public class chimpTest extends JFrame implements ActionListener {
-    JFrame chimpTest = new JFrame();
-    JLabel title = new JLabel();
-    JLabel subtitle = new JLabel();
-    JButton start = new JButton("Start");
-    JButton home_but = new JButton();
-    JPanel gamePanel = new JPanel();
-    JLabel finalScore = new JLabel();
-    int size;
-    int scoreTracker;
-    JButton[]butArray = new JButton[100];
+    private final JLabel title = new JLabel();
+    private final JLabel subtitle = new JLabel();
+    private final JButton start = new JButton("Start");
+    private final JButton homebut = new JButton();
+    private final JPanel gamePanel = new JPanel();
+    private final JLabel finalScore = new JLabel();
+    private int size;
+    private int scoreTracker;
+    private final JButton[]butArray = new JButton[100];
 
-    HomePage.Profile chimpCurrent;
+    private final HomePage.Profile chimpCurrent;
     public chimpTest(HomePage.Profile current){
         chimpCurrent = current;
 
@@ -52,8 +57,9 @@ public class chimpTest extends JFrame implements ActionListener {
         subtitle.setVisible(true);
         this.add(subtitle);
 
-        finalScore.setBounds(248,200,200,100);
+        finalScore.setBounds(150,200,300,100);
         finalScore.setFont(new Font(null,Font.PLAIN,32));
+        finalScore.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(finalScore);
 
         start.setHorizontalAlignment(SwingConstants.CENTER);
@@ -63,11 +69,11 @@ public class chimpTest extends JFrame implements ActionListener {
         this.add(start);
 
         // add home button
-        this.add(home_but);
-        home_but.setBounds(220, 500, 150, 50); // sets location and size of button
-        home_but.setFocusable(false);
-        home_but.setText("Return to Menu");
-        home_but.addActionListener(this);
+        this.add(homebut);
+        homebut.setBounds(220, 500, 150, 50); // sets location and size of button
+        homebut.setFocusable(false);
+        homebut.setText("Return to Menu");
+        homebut.addActionListener(this);
 
         gamePanel.setVisible(false);
         gamePanel.setBounds(100,100,400,400);
@@ -86,15 +92,19 @@ public class chimpTest extends JFrame implements ActionListener {
      * game, making sure the buttons are clicked in order.
      *******************************************************/
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == home_but) {
+        if (e.getSource() == homebut) {
             this.dispose();
             new HomePage(chimpCurrent);
         }
         if (e.getSource() == start){
             theGame();
         }
+        buttoncheck((JButton) e.getSource());
+    }
+
+    private void buttoncheck(JButton selected){
         for(int r=0;r<size;r++){
-            if(e.getSource() == butArray[r] &&  r == scoreTracker){
+            if(selected == butArray[r] &&  r == scoreTracker){
                 butArray[r].setVisible(false);
                 scoreTracker++;
                 if (size >= 4) {
@@ -105,7 +115,7 @@ public class chimpTest extends JFrame implements ActionListener {
                     }
                 }
                 // test if the last button in the sequence is pressed and start the next round
-                if(e.getSource() == butArray[size-1]){
+                if(selected == butArray[size-1]){
                     // adds 1 to the size. size = level
                     size = size + 1;
                     scoreTracker =0;
@@ -114,7 +124,7 @@ public class chimpTest extends JFrame implements ActionListener {
                 }
             }
             // if wrong button is clicked end the game and display scores and play again button
-            else if(e.getSource()==butArray[r] && r != scoreTracker){
+            else{
                 gamePanel.setVisible(false);
                 start.setVisible(true);
                 finalScore.setVisible(true);
@@ -122,7 +132,7 @@ public class chimpTest extends JFrame implements ActionListener {
                 if(size == 4){size = 0;}
                 else{size = size -1;}
                 // display the score to user
-                finalScore.setText("Score: "+size);
+                finalScore.setText("Highest round: "+size);
                 // check to see if high score for user is beaten
                 if(size> chimpCurrent.getChimp()){
                     chimpCurrent.setChimp(size);
@@ -130,7 +140,6 @@ public class chimpTest extends JFrame implements ActionListener {
             }
         }
     }
-
     /****************************************
      * begins the process of the actual game.
      * removes any unneeded buttons and labels
@@ -152,9 +161,9 @@ public class chimpTest extends JFrame implements ActionListener {
         initialize(size);
     }
 
-    private void initialize(int size){
+    private void initialize(int arrsize){
         // loop through the array to create buttons and set locations
-        for(int z = 0; z < size; z++){
+        for(int z = 0; z < arrsize; z++){
 
             butArray[z] = new JButton(String.valueOf(z + 1));
             butArray[z].addActionListener(this);
@@ -177,7 +186,11 @@ public class chimpTest extends JFrame implements ActionListener {
             gamePanel.add(butArray[z]);
         }
     }
-    // generate a random number in the bounds of the game panel for the location of the button
+
+    /**************************************************
+     * generate a random number in the bounds of the
+     * game panel for the location of the button
+      ************************************************/
     public int getRandomNumber(int min, int max){
         return (int) ((Math.random() *(max-min)) + min);
     }

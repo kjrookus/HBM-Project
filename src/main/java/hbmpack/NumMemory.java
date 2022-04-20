@@ -26,79 +26,78 @@ import javax.swing.Timer;
 
 public class NumMemory extends JFrame implements ActionListener {
 
-    JFrame NumMemory = new JFrame();
-    JLabel label = new JLabel("Number Memory");
-    JLabel numberTest = new JLabel("Memorize", SwingConstants.CENTER);
-    JButton home_but;
-    JButton start_game;
-    JPanel game_panel;
-    JTextField numbers;
-    Timer delay;
-    JLabel score_tracker;
-    boolean game_end = false;
-    int level = 1;
-    int score = 0;
-    int shown_number = 0;
+    private final JFrame numMemory = new JFrame();
+    private final JLabel numberTest = new JLabel("Memorize", SwingConstants.CENTER);
+    private final JButton homeBut;
+    private final JButton startGame;
+    private final JPanel gamePanel;
+    private final JTextField numbers;
+    private Timer delay;
+    private final JLabel scoreTracker;
+    private int level = 1;
+    private int score = 0;
+    private int shownNumber = 0;
 
-    HomePage.Profile numcurrent;
+    private final HomePage.Profile numcurrent;
 
     NumMemory(HomePage.Profile current) {
         numcurrent = current;
+        JLabel label = new JLabel("Number Memory");
         label.setBounds(200, 20, 1000, 50);
         label.setFont(new Font(null, Font.PLAIN, 25));
 
-        NumMemory.add(label);
+        numMemory.add(label);
 
-        NumMemory.setTitle("Number Memory"); // Sets Title
-        NumMemory.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Exit Application
-        NumMemory.setLayout(null);
-        NumMemory.setSize(600, 600); //set dimension
-        NumMemory.setVisible(true); //make frame visible
+        numMemory.setTitle("Number Memory"); // Sets Title
+        numMemory.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Exit Application
+        numMemory.setLayout(null);
+        numMemory.setSize(600, 600); //set dimension
+        numMemory.setVisible(true); //make frame visible
 
         // game takes place in panel
-        game_panel = new JPanel();
-        game_panel.setBackground(Color.gray);
-        game_panel.setBounds(150, 150, 300, 250);
-        NumMemory.add(game_panel, BorderLayout.CENTER);
-        game_panel.setVisible(false);
-        game_panel.setLayout(null);
+        gamePanel = new JPanel();
+        gamePanel.setBackground(Color.gray);
+        gamePanel.setBounds(150, 150, 300, 250);
+        numMemory.add(gamePanel, BorderLayout.CENTER);
+        gamePanel.setVisible(false);
+        gamePanel.setLayout(null);
 
-        score_tracker = new JLabel("Score: " + score, SwingConstants.CENTER);
-        game_panel.add(score_tracker);
-        score_tracker.setBounds(100 + game_panel.getInsets().bottom,
-                175 + game_panel.getInsets().right, 100, 50);
+        scoreTracker = new JLabel("Score: " + score, SwingConstants.CENTER);
+        gamePanel.add(scoreTracker);
+        scoreTracker.setBounds(100 + gamePanel.getInsets().bottom,
+                175 + gamePanel.getInsets().right, 100, 50);
 
         numberTest.setText("Memorize: ");
-        numberTest.setBounds(50 + game_panel.getInsets().bottom,
-                80 + game_panel.getInsets().right, 200, 50);
+        numberTest.setBounds(50 + gamePanel.getInsets().bottom,
+                80 + gamePanel.getInsets().right, 200, 50);
         numberTest.setVisible(true);
         numberTest.setFont((new Font("Serif", Font.PLAIN, 40)));
-        game_panel.add(numberTest);
+        gamePanel.add(numberTest);
 
         // start button begins game
-        start_game = new JButton("start");
-        start_game.setBounds(220, 250, 150, 50);
-        start_game.addActionListener(this);
-        start_game.setVisible(true);
-        NumMemory.add(start_game);
+        startGame = new JButton("start");
+        startGame.setBounds(220, 250, 150, 50);
+        startGame.addActionListener(this);
+        startGame.setVisible(true);
+        numMemory.add(startGame);
 
         // textField for entering answer
         numbers = new JTextField();
         numbers.setPreferredSize(new Dimension(100, 40));
-        numbers.setBounds(100 + game_panel.getInsets().left, 150 + getInsets().right, 100, 40);
+        numbers.setBounds(100 + gamePanel.getInsets().left, 150 + getInsets().right, 100, 40);
         numbers.setVisible(false);
         numbers.setFont(new Font(null, Font.PLAIN, 16));
         numbers.addActionListener(this);
         numbers.setFocusable(true);
         numbers.setToolTipText("Enter the number: ");
-        game_panel.add(numbers);
+        gamePanel.add(numbers);
         // add home button
-        home_but = new JButton();
-        NumMemory.add(home_but);
-        home_but.setBounds(220, 475, 150, 50); // sets location and size of button
-        home_but.setFocusable(false);
-        home_but.setText("Return to Menu");
-        home_but.addActionListener(this);
+        homeBut = new JButton();
+        numMemory.add(homeBut);
+        homeBut.setBounds(220, 475, 150, 50); // sets location and size of button
+        homeBut.setFocusable(false);
+        homeBut.setText("Return to Menu");
+        homeBut.addActionListener(this);
 
     }
 
@@ -110,16 +109,16 @@ public class NumMemory extends JFrame implements ActionListener {
      * **********************************************************/
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == home_but) {
-            NumMemory.dispose();
+        if (e.getSource() == homeBut) {
+            numMemory.dispose();
             new HomePage(numcurrent);
         }
-        if (e.getSource() == start_game) {
-            start_game.setVisible(false);
+        if (e.getSource() == startGame) {
+            startGame.setVisible(false);
             theGame(level);
             score = 0;
             level = 1;
-            score_tracker.setText("Score: " + score);
+            scoreTracker.setText("Score: " + score);
         }
         /*
         * this is the action listener for the Jtextfield where the
@@ -128,26 +127,25 @@ public class NumMemory extends JFrame implements ActionListener {
          */
         if (e.getSource() == numbers) {
             int answer = Integer.parseInt(numbers.getText());
-            if (answer == shown_number) {
+            if (answer == shownNumber) {
                 level++;
                 theGame(level);
                 score++;
-                score_tracker.setText("Score: " + score);
+                scoreTracker.setText("Score: " + score);
                 if (score >= numcurrent.getNumbScore()) {
                     numcurrent.setNumbScore(score);
                 }
             } else {
                 numbers.setVisible(false);
-                score_tracker.setText("Final Score: " + score);
-                game_end = true;
+                scoreTracker.setText("Final Score: " + score);
                 if (score >= numcurrent.getNumbScore()) {
                     numcurrent.setNumbScore(score);
                 }
-                game_panel.add(start_game);
-                start_game.setBounds(100 + game_panel.getInsets().left,
+                gamePanel.add(startGame);
+                startGame.setBounds(100 + gamePanel.getInsets().left,
                         150 + getInsets().right, 100, 40);
-                start_game.setText("Play Again");
-                start_game.setVisible(true);
+                startGame.setText("Play Again");
+                startGame.setVisible(true);
                 score = 0;
                 level = 1;
             }
@@ -170,15 +168,15 @@ public class NumMemory extends JFrame implements ActionListener {
 
     public void theGame(int curlevel) {
         //shows the gamepanel and numbers, hides the input field
-        game_panel.setVisible(true);
+        gamePanel.setVisible(true);
         numberTest.setVisible(true);
         numbers.setVisible(false);
         //sets the textfield back to blank
         numbers.setText("");
         //generates a random number of size relative to level
-        shown_number = getRandomNumber((int) Math.pow(10, curlevel - 1), (int) Math.pow(10, curlevel));
+        shownNumber = getRandomNumber((int) Math.pow(10, curlevel - 1), (int) Math.pow(10, curlevel));
         //sets the text to the random number
-        numberTest.setText(String.valueOf(shown_number));
+        numberTest.setText(String.valueOf(shownNumber));
 
         //pauses the program for 5 seconds before calling the action listener
         delay = new Timer(5000, this);

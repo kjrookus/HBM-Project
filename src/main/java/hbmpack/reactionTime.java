@@ -16,21 +16,20 @@ import java.awt.event.*;
  *************************************************************/
 public class reactionTime extends JFrame implements ActionListener {
 
-    static JFrame reactionTime = new JFrame();
-    JLabel title = new JLabel(); // explain rules to user
-    JLabel subtitle = new JLabel();
-    JLabel click = new JLabel(); // tells player what to do
-    JButton start = new JButton("Start");
-    JButton home_but = new JButton(); // returns home
-    JButton redBut = new JButton(); // test is giant button that goes from red to green
-    JPanel panel = new JPanel(); // panel made to add button to
-    Timer delay; // time tracker
-    JLabel results = new JLabel();
+    private final JLabel title = new JLabel(); // explain rules to user
+    private final JLabel subtitle = new JLabel();
+    private final JLabel click = new JLabel(); // tells player what to do
+    private final JButton start = new JButton("Start");
+    private final JButton homeBut = new JButton(); // returns home
+    private final JButton redBut = new JButton(); // test is giant button that goes from red to green
+    private final JPanel panel = new JPanel(); // panel made to add button to
+    private Timer delay; // time tracker
+    private final JLabel results = new JLabel();
 
-    int elapsedTime;
-    boolean test;
+    private int elapsedTime;
+    private boolean test;
 
-    HomePage.Profile reactCurrent;
+    private final HomePage.Profile reactCurrent;
 
     public reactionTime(HomePage.Profile current) {
 
@@ -79,16 +78,16 @@ public class reactionTime extends JFrame implements ActionListener {
         this.add(start);
 
         // add home button
-        this.add(home_but);
-        home_but.setBounds(220, 475, 150, 50);
-        home_but.setFocusable(false);
-        home_but.setText("Return to Menu");
-        home_but.addActionListener(this);
+        this.add(homeBut);
+        homeBut.setBounds(220, 475, 150, 50);
+        homeBut.setFocusable(false);
+        homeBut.setText("Return to Menu");
+        homeBut.addActionListener(this);
 
     }
     // keeps track of time passed since the start of the game
     // goes up by 1 ms for every 1ms passed
-    Timer timer = new Timer(1, e -> elapsedTime+=10);
+    private final Timer timer = new Timer(1, e -> elapsedTime+=10);
 
     /**************************************************
      * Action listener for various buttons in the game.
@@ -105,7 +104,7 @@ public class reactionTime extends JFrame implements ActionListener {
      * @param e actionlistener input.
      **************************************************/
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == home_but) {
+        if (e.getSource() == homeBut) {
             new HomePage(reactCurrent);
             this.dispose();
         }
@@ -120,7 +119,7 @@ public class reactionTime extends JFrame implements ActionListener {
                 panel.setVisible(false);
                 start.setText("Try Again");
                 start.setVisible(true);
-                home_but.setVisible(true);
+                homeBut.setVisible(true);
                 results.setBounds(100,200,600,100);
                 results.setText("Too Soon! Press Try Again to restart!");
             }
@@ -131,7 +130,7 @@ public class reactionTime extends JFrame implements ActionListener {
                 results.setVisible(true);
                 start.setText("Try Again");
                 start.setVisible(true);
-                home_but.setVisible(true);
+                homeBut.setVisible(true);
                 results.setBounds(240,200,600,100);
                 results.setText("Time: " + elapsedTime + "ms");
                 // set new high score if previous score is higher than new one
@@ -170,7 +169,7 @@ public class reactionTime extends JFrame implements ActionListener {
         click.setVisible(false);
         title.setVisible(false);
         subtitle.setVisible(false);
-        home_but.setVisible(false);
+        homeBut.setVisible(false);
 
         // represents the milliseconds passed since start of timer
         elapsedTime = 0;

@@ -24,50 +24,24 @@ import javax.swing.JTextArea;
 
 public class TypeSpeed implements KeyListener, ActionListener {
     //variable initilization for wpm calculating
-    double start = 0;
-    double end = 0;
-    double timeTaken;
-    int Wpm = 0;
-    int totalChars = 0;
+    private double start = 0;
+    private double timeTaken;
+    private int intWpm = 0;
 
-    JFrame frame = new JFrame();
-    JLabel label = new JLabel("Typing Speed.");
-    JLabel wpm = new JLabel("Words per minute: " + Wpm);
-    JLabel adjustedWpm = new JLabel("Adjusted words per minute: " + Wpm);
-    JTextArea testWords = new JTextArea();
-    JTextArea typeWords = new JTextArea();
-    JButton home_but = new JButton();
-    HomePage.Profile typecurrent;
+    private final JFrame frame = new JFrame();
+    private final JLabel wpm = new JLabel("Words per minute: " + intWpm);
+    private final JLabel adjustedWpm = new JLabel("Adjusted words per minute: " + intWpm);
+    private final JTextArea testWords = new JTextArea();
+    private final JTextArea typeWords = new JTextArea();
+    private final JButton homeBut = new JButton();
+    private final HomePage.Profile typecurrent;
 
-
-    String test0 = "The landlady informed me that he had left the house shortly after eight"
-            + " o'clock in the morning. I sat down beside the fire, however, with the intention "
-            + "of awaiting him, however long he might be. I was already deeply interested in "
-            + "his inquiry, for, though it was surrounded by none of the grim and strange "
-            + "features which were associated with the two crimes which I have already recorded, "
-            + "still, the nature of the case and the exalted station of his client gave it a "
-            + "character of its own.";
-
-    String test1 = "To learn to type quickly, practice often and adopt the proper technique. "
-            + "Fix your posture, have adequate lighting, position your hands correctly over the "
-            + "keyboard, look at the screen and use all your fingers to hit the keys. At first, "
-            + "concentrate on accuracy over speed. This will help you develop muscle memory and "
-            + "create automatic reflexes. Keep practicing and gradually pick up the pace. "
-            + "You'll see results after just a few weeks!";
-
-    String test2 = "A late 20th century trend in typing, primarily used with devices with "
-            + "small keyboards (such as PDAs and Smartphones), is thumbing or thumb typing. "
-            + "This can be accomplished using one or both thumbs. Similar to desktop keyboards "
-            + "and input devices, if a user overuses keys which need hard presses and/or have "
-            + "small and unergonomic layouts, it could cause thumb tendinitis or other "
-            + "repetitive strain injury.";
-
-    String[] tests = {test0, test1, test2};
 
     TypeSpeed(HomePage.Profile current) {
         typecurrent = current;
 
 
+        JLabel label = new JLabel("Typing Speed.");
         label.setBounds(50, 25, 1000, 50);
         label.setFont(new Font(null, Font.PLAIN, 25));
         wpm.setBounds(50, 425, 200, 40);
@@ -90,6 +64,26 @@ public class TypeSpeed implements KeyListener, ActionListener {
         testWords.setWrapStyleWord(true);
         testWords.setEditable(false);
         testWords.setFont(new Font(null, Font.PLAIN, 16));
+        String test0 = "The landlady informed me that he had left the house shortly after eight"
+                + " o'clock in the morning. I sat down beside the fire, however, with the intention "
+                + "of awaiting him, however long he might be. I was already deeply interested in "
+                + "his inquiry, for, though it was surrounded by none of the grim and strange "
+                + "features which were associated with the two crimes which I have already recorded, "
+                + "still, the nature of the case and the exalted station of his client gave it a "
+                + "character of its own.";
+        String test1 = "To learn to type quickly, practice often and adopt the proper technique. "
+                + "Fix your posture, have adequate lighting, position your hands correctly over the "
+                + "keyboard, look at the screen and use all your fingers to hit the keys. At first, "
+                + "concentrate on accuracy over speed. This will help you develop muscle memory and "
+                + "create automatic reflexes. Keep practicing and gradually pick up the pace. "
+                + "You'll see results after just a few weeks!";
+        String test2 = "A late 20th century trend in typing, primarily used with devices with "
+                + "small keyboards (such as PDAs and Smartphones), is thumbing or thumb typing. "
+                + "This can be accomplished using one or both thumbs. Similar to desktop keyboards "
+                + "and input devices, if a user overuses keys which need hard presses and/or have "
+                + "small and unergonomic layouts, it could cause thumb tendinitis or other "
+                + "repetitive strain injury.";
+        String[] tests = {test0, test1, test2};
         testWords.setText(tests[(int) Math.floor(Math.random() * 3)]);
         testWords.setBounds(50, 75, 500, 165);
 
@@ -104,12 +98,12 @@ public class TypeSpeed implements KeyListener, ActionListener {
         frame.add(typeWords);
 
         // add home button
-        frame.add(home_but);
-        home_but.setBounds(450, 500, 125, 50); // sets location and size of button
-        home_but.setFocusable(false);
-        home_but.setText("Return to Menu");
-        home_but.addActionListener(this);
-        home_but.setVisible(false);
+        frame.add(homeBut);
+        homeBut.setBounds(450, 500, 125, 50); // sets location and size of button
+        homeBut.setFocusable(false);
+        homeBut.setText("Return to Menu");
+        homeBut.addActionListener(this);
+        homeBut.setVisible(false);
 
 
     }
@@ -118,16 +112,16 @@ public class TypeSpeed implements KeyListener, ActionListener {
      *method to calculate the accuracy of the users currently typed message.
      *
      * @param input value is the string the user has inputted
-     * @param Goal is the targetted string that the input is compared against
+     * @param goal is the targetted string that the input is compared against
      *
      *@return a double equal to correct characters divided by total characters
      **********************************************************************/
 
-    public double adjust(String input, String Goal) {
+    public double adjust(String input, String goal) {
         int errors = 0;
         double adjustment = 0.0;
         for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) != Goal.charAt(i)) {
+            if (input.charAt(i) != goal.charAt(i)) {
                 errors++;
             }
         }
@@ -141,7 +135,7 @@ public class TypeSpeed implements KeyListener, ActionListener {
     @Override
     public final void keyTyped(KeyEvent e) {
         //gets the length of the current test
-        totalChars = testWords.getText().length();
+        int totalChars = testWords.getText().length();
 
         if (typeWords.hasFocus() && typeWords.getText().length() == 0) {
             start = LocalTime.now().toNanoOfDay(); //stores the time when the player starts
@@ -151,9 +145,9 @@ public class TypeSpeed implements KeyListener, ActionListener {
             typeWords.setEditable(false);
             System.out.println("The total chars: " + totalChars
                     + "The timetaken in seconds: " + timeTaken);
-            System.out.println(Wpm);
-            typecurrent.setWpmScore(Wpm);
-            home_but.setVisible(true);
+            System.out.println(intWpm);
+            typecurrent.setWpmScore(intWpm);
+            homeBut.setVisible(true);
         }
     }
 
@@ -166,18 +160,18 @@ public class TypeSpeed implements KeyListener, ActionListener {
     public final void keyReleased(KeyEvent e) {
         if (typeWords.hasFocus() && typeWords.getText().length() < testWords.getText().length()) {
             int typedSoFar = typeWords.getText().length();
-            end = LocalTime.now().toNanoOfDay(); //stores the time when finished
+            double end = LocalTime.now().toNanoOfDay(); //stores the time when finished
             timeTaken = ((end - start) / 1000000000.0); //calculates the time taken in seconds
-            Wpm = (int) (((typedSoFar / 5) / timeTaken) * 60);
-            wpm.setText("Words per minute: " + Wpm);
+            intWpm = (int) (((typedSoFar / 5) / timeTaken) * 60);
+            wpm.setText("Words per minute: " + intWpm);
             adjustedWpm.setText("Adjusted words per minute: " +
-                    ((int) (Wpm * adjust(typeWords.getText(), testWords.getText()))));
+                    ((int) (intWpm * adjust(typeWords.getText(), testWords.getText()))));
         }
     }
 
     @Override
     public final void actionPerformed(ActionEvent e) {
-        if (e.getSource() == home_but) {
+        if (e.getSource() == homeBut) {
             new HomePage(typecurrent);
             frame.dispose();
         }

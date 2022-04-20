@@ -9,10 +9,29 @@ public class VerbMemoryBack extends VerbMemoryFront{
         super(current);
     }
 
-    static int count = 0;
-    static boolean wordSeen = false;
-    static int score = 0;
-    static int lives = 3;
+    private static int count = 0;
+    private static boolean wordSeen = false;
+    private static int score = 0;
+    private static int lives = 3;
+
+    public static int getCount() {
+        return count;
+    }
+    public static void setCount(int newcount) {
+        VerbMemoryBack.count = newcount;
+    }
+    public static int getScore() {
+        return score;
+    }
+    public static void setScore(int newscore) {
+        VerbMemoryBack.score = newscore;
+    }
+    public static int getLives() {
+        return lives;
+    }
+    public static void setLives(int newlives) {
+        VerbMemoryBack.lives = newlives;
+    }
     public static String runVerbmem(String[] checked){
         String goalWord;
             //half the time generates a new word, half the time takes an existing word
