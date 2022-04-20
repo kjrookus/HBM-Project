@@ -185,7 +185,13 @@ public class NumMemory extends JFrame implements ActionListener {
 
     }
 
-    //random number generator between min and max
+    /**********************************************
+     * random number generator between min and max
+     *
+     * @param min the minimum number we want to generate
+     * @param max the max number we want to generate
+     * @return an integer between the min and max
+     **********************************************/
     public static int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }

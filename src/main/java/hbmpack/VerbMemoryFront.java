@@ -1,9 +1,22 @@
 package hbmpack;
 
-import java.awt.*;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+/**********************************************************
+ * Opens a GUI that generates random words and has the player
+ * evaluate whether or not they have seen the word before.
+ * Player earns 1 score for correct answers and loses 1
+ * life for incorrect answers.
+ *
+ * @author Kaden Rookus & Alex Bergers
+ * @version 02/20/2022
+ * **********************************************************/
 
 public class VerbMemoryFront extends JFrame implements ActionListener {
     private final JFrame verbMemory = new JFrame();
@@ -23,7 +36,7 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
     private final JLabel goalword = new JLabel();
     private final HomePage.Profile verbcurrent;
 
-    VerbMemoryFront(HomePage.Profile current){
+    VerbMemoryFront (HomePage.Profile current) {
         verbcurrent = current;
 
         setLabels();
@@ -41,7 +54,12 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
 
 
     }
-    private void setLabels(){
+
+    /*************************************
+     * Private helper method to organize
+     * the generation of the Jlabels.
+     ************************************/
+    private void setLabels() {
         goalword.setHorizontalAlignment(SwingConstants.CENTER);
         goalword.setBounds(0, 250, 600, 100);
         goalword.setFont(new Font(null, Font.PLAIN, 35));
@@ -87,7 +105,11 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
         verbMemory.add(subtitle3);
     }
 
-    public final void setButtons(){
+    /*************************************
+     * Private helper method to organize
+     * the generation of the Jbuttons.
+     ************************************/
+    public final void setButtons() {
 
         //home button
         homeBut = new JButton();
@@ -125,39 +147,40 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
 
     /**************************************************
      * handles the code that responds to specific
-     * action calls by action listeners
+     * action calls by action listeners.
+     *
      * @param e The action listener performing an action
      **************************************************/
-    public void actionPerformed(ActionEvent e){
-        if (e.getSource()== homeBut) {
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == homeBut) {
 
             verbMemory.dispose();
             new HomePage(verbcurrent);
         }
-        if(e.getSource() == startGame){
+        if (e.getSource() == startGame) {
            frontGame();
             run();
         }
-        if(e.getSource() == newBut){
-            if(!VerbMemoryBack.neweval()){
+        if (e.getSource() == newBut) {
+            if (!VerbMemoryBack.neweval()) {
                 updatescorelives();
                 endgame();
-            }else {
+            } else {
                 updatescorelives();
                 run();
             }
         }
-        if(e.getSource() == seenBut){
-            if(!VerbMemoryBack.seeneval()){
+        if (e.getSource() == seenBut) {
+            if (!VerbMemoryBack.seeneval()) {
                 updatescorelives();
                 endgame();
-            }else {
+            } else {
                 updatescorelives();
                 run();
             }
         }
-        if(e.getSource() == tryagainBut){
-            if(verbcurrent.getVerbScore() < VerbMemoryBack.getScore()) {
+        if (e.getSource() == tryagainBut) {
+            if (verbcurrent.getVerbScore() < VerbMemoryBack.getScore()) {
                 verbcurrent.setVerbScore(VerbMemoryBack.getScore());
             }
             verbMemory.dispose();
@@ -165,14 +188,21 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
         }
     }
 
-    private void updatescorelives(){
+    /*******************************************************
+     * Helper method that updates the score and lives labels.
+     *******************************************************/
+    private void updatescorelives() {
         scorelabel.setText("Score: " + VerbMemoryBack.getScore());
         lifeLabel.setText("Lives: " + VerbMemoryBack.getLives());
     }
 
     private final String[] checked = new String[100];
 
-    public final void frontGame(){
+    /**************************************
+     * clears the starting menu to prep for
+     * the game to appear.
+     *************************************/
+    public final void frontGame() {
         title.setVisible(false);
         subtitle1.setVisible(false);
         subtitle2.setVisible(false);
@@ -185,15 +215,26 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
         goalword.setVisible(true);
         homeBut.setVisible(false);
     }
-    private void run(){
+
+    /*********************************************************
+     * runs the verbal memory game by calling VerbMemoryBack.
+     *********************************************************/
+    private void run() {
         String currentword = VerbMemoryBack.runVerbmem(checked);
         //add word
         int count = VerbMemoryBack.getCount();
         checked[count] = currentword;
         goalword.setText(currentword);
     }
-    private void endgame(){
-        if(verbcurrent.getVerbScore() < VerbMemoryBack.getScore()) {
+
+    /***************************************
+     * Function that ends the game when the
+     * player runs out of lives. Assigns new
+     * high score if applicable and clears
+     * the game from the gui.
+     ***************************************/
+    private void endgame() {
+        if (verbcurrent.getVerbScore() < VerbMemoryBack.getScore()) {
             verbcurrent.setVerbScore(VerbMemoryBack.getScore());
         }
         title.setVisible(true);
