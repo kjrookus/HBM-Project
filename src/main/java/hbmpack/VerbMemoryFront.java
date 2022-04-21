@@ -42,7 +42,7 @@ public class VerbMemoryFront extends JFrame implements ActionListener {
         setLabels();
         setButtons();
         VerbMemoryBack.setScore(0);
-        VerbMemoryBack.setLives(0);
+        VerbMemoryBack.setLives(3);
         VerbMemoryBack.setCount(0);
         updatescorelives();
 

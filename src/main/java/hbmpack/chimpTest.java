@@ -98,44 +98,51 @@ public class chimpTest extends JFrame implements ActionListener {
         }
         if (e.getSource() == start){
             theGame();
+        }else {
+            buttoncheck((JButton) e.getSource());
         }
-        buttoncheck((JButton) e.getSource());
     }
 
     private void buttoncheck(JButton selected){
         for(int r=0;r<size;r++){
-            if(selected == butArray[r] &&  r == scoreTracker){
+            if(selected == butArray[r] &&  r == scoreTracker) {
+                System.out.println("here");
                 butArray[r].setVisible(false);
                 scoreTracker++;
                 if (size >= 4) {
                     for (int x = 0; x < size; x++) {
+
                         butArray[x].setText("");
                         butArray[x].setForeground(Color.white);
                         butArray[x].setBackground(Color.white);
                     }
                 }
                 // test if the last button in the sequence is pressed and start the next round
-                if(selected == butArray[size-1]){
+                if (selected == butArray[size - 1]) {
                     // adds 1 to the size. size = level
                     size = size + 1;
-                    scoreTracker =0;
+                    scoreTracker = 0;
                     gamePanel.repaint();
                     initialize(size);
                 }
-            }
-            // if wrong button is clicked end the game and display scores and play again button
-            else{
-                gamePanel.setVisible(false);
-                start.setVisible(true);
-                finalScore.setVisible(true);
-                // if size = 4, user failed to complete any test
-                if(size == 4){size = 0;}
-                else{size = size -1;}
-                // display the score to user
-                finalScore.setText("Highest round: "+size);
-                // check to see if high score for user is beaten
-                if(size> chimpCurrent.getChimp()){
-                    chimpCurrent.setChimp(size);
+            }else if(selected==butArray[r] && r != scoreTracker){
+                {
+                    System.out.println("here2");
+                    gamePanel.setVisible(false);
+                    start.setVisible(true);
+                    finalScore.setVisible(true);
+                    // if size = 4, user failed to complete any test
+                    if (size == 4) {
+                        size = 0;
+                    } else {
+                        size = size - 1;
+                    }
+                    // display the score to user
+                    finalScore.setText("Highest round: " + size);
+                    // check to see if high score for user is beaten
+                    if (size > chimpCurrent.getChimp()) {
+                        chimpCurrent.setChimp(size);
+                    }
                 }
             }
         }

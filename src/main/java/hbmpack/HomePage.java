@@ -1,10 +1,15 @@
 package hbmpack;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 
 /**********************************************************
  * Opens a GUI that displays the Homepage which allows for
@@ -37,7 +42,8 @@ public class HomePage extends JFrame implements ActionListener {
     private int usercount = userDatabase.getUsercount();
 
     /***********************************
-     * getter for the userbase variable
+     * getter for the userbase variable.
+     *
      * @return returns the userbase
      **********************************/
     public Profile[] getUserbase() {
@@ -45,7 +51,8 @@ public class HomePage extends JFrame implements ActionListener {
     }
 
     /***************************************
-     * getter for the number of current users
+     * getter for the number of current users.
+     *
      * @return number of current users
      ***************************************/
     public int getUsercount() {
@@ -97,7 +104,7 @@ public class HomePage extends JFrame implements ActionListener {
         homePage.setVisible(true); //make frame visible
 
         chimpTestBut = new JButton();
-        chimpTestBut.setBounds(405,300,150,50);
+        chimpTestBut.setBounds(405, 300, 150, 50);
         chimpTestBut.setFocusable(false);
         chimpTestBut.setText("Chimp Test");
         chimpTestBut.addActionListener(this);
@@ -138,9 +145,9 @@ public class HomePage extends JFrame implements ActionListener {
         typeScore.setBounds(405, 480, 200, 50);
         numScore.setBounds(205, 480, 200, 50);
         verbScore.setBounds(5, 480, 200, 50);
-        seqScore.setBounds(205, 500,200, 50);
-        reactScore.setBounds(5,500,200,50);
-        chimpScore.setBounds(405,500,200,50);
+        seqScore.setBounds(205, 500, 200, 50);
+        reactScore.setBounds(5, 500, 200, 50);
+        chimpScore.setBounds(405, 500, 200, 50);
 
         //implements an action listener to the textfield
         enterName.addActionListener(e -> {
@@ -210,22 +217,19 @@ public class HomePage extends JFrame implements ActionListener {
         if (e.getSource() == verbmembut) {
             new VerbMemoryFront(current); // Verb memory page
             homePage.dispose();
-        }
-        else if (e.getSource() == nummembut) {
+        } else if (e.getSource() == nummembut) {
             new NumMemory(current); // num memory page
             homePage.dispose();
-        }
-        else if (e.getSource() == typespeedbut) {
+        } else if (e.getSource() == typespeedbut) {
             new TypeSpeed(current); // type Speed page
             homePage.dispose();
-        }
-        else if (e.getSource()== reactiontimebut){
+        } else if (e.getSource()== reactiontimebut){
             new reactionTime(current);
             homePage.dispose();
-        }else if(e.getSource() == sequencemembut){
+        } else if(e.getSource() == sequencemembut){
             new SeqMemory(current);
             homePage.dispose();
-        }else if(e.getSource()==chimpTestBut){
+        } else if(e.getSource()==chimpTestBut){
             new chimpTest(current);
             homePage.dispose();
         }
@@ -288,13 +292,13 @@ public class HomePage extends JFrame implements ActionListener {
             this.numbScore = newnumbScore;
         }
 
-        public void setReactScore(int reactScore){react = reactScore;}
+        public void setReactScore(int reactScore) {react = reactScore;}
 
-        public int getReactScore(){return react;}
+        public int getReactScore() {return react;}
 
-        public void setChimp(int score){chimpScore = score;}
+        public void setChimp(int score) {chimpScore = score;}
 
-        public int getChimp(){return chimpScore;}
+        public int getChimp() {return chimpScore;}
 
     }
 
